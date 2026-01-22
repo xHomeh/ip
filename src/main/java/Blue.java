@@ -56,7 +56,7 @@ public class Blue {
         String wrappedText = line
                 + str + "\n"
                 + line;
-        System.out.print(wrappedText);
+        System.out.println(wrappedText);
     }
 
     // Add new task to taskList
@@ -78,7 +78,7 @@ public class Blue {
             System.out.println(message);
         }
 
-        System.out.print(line);
+        System.out.println(line);
     }
 
     // Handles the commands inputted to the chatbot
