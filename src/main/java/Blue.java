@@ -16,26 +16,26 @@ public class Blue {
         System.out.print(logo);
 
         String greeting = line
-                    + "Hi☆・*。It's me, Blue! \n"
-                    + "What do you need help with? \n"
-                    + line;
+                + "Hi☆・*。It's me, Blue! \n"
+                + "What do you need help with? \n"
+                + line;
         System.out.print(greeting);
     }
 
     // Prints the goodbye message when the chatbot is quit
     private static void bye() {
         String goodbye = line
-                    + "Byeee (^_^)/~ See you soon! \n"
-                    + line;
+                + "Byeee (^_^)/~ See you soon! \n"
+                + line;
         System.out.print(goodbye);
     }
 
     // Returns a boolean and checks if the user typed either quit, bye, or exit to quit the chatbot
-    private static boolean checkExitInput(String input) {
-        return input.equalsIgnoreCase("bye")
-                || input.equalsIgnoreCase("quit")
-                || input.equalsIgnoreCase("exit")
-                || input.equalsIgnoreCase("q");
+    private static boolean checkExitInput(Command input) {
+        return input.equals(Command.EXIT)
+                || input.equals(Command.BYE)
+                || input.equals(Command.QUIT)
+                || input.equals(Command.Q);
     }
 
     // Wrap string with lines on the top and bottom
@@ -54,9 +54,27 @@ public class Blue {
         wrapTextWithLines(message);
     }
 
+    private static void addTaskMessage(Task task) {
+        String message = "Okay! I'll add this task now! \n"
+                    + task.toString() + "\n"
+                    + String.format("You have %d tasks!", taskList.size());
+        wrapTextWithLines(message);
+    }
+
+    private  static void addToDo(String input) {
+        Task task = new ToDo(input);
+        taskList.add(task);
+        addTaskMessage(task);
+    }
+
     // print out the list of stored text
     private static void printList() {
         int size = taskList.size();
+
+        if (size == 0) {
+            wrapTextWithLines("Wow! There's nothing to do!");
+            return;
+        }
 
         System.out.print(line);
 
@@ -72,7 +90,7 @@ public class Blue {
         Task task = taskList.get(idx-1);
         task.markDone();
         String message = "YAY this task is now done!! ^o^ \n"
-                    + task.toString();
+                + task.toString();
         wrapTextWithLines(message);
     }
 
@@ -84,16 +102,29 @@ public class Blue {
         wrapTextWithLines(message);
     }
 
+    private static void printErrorMsg() {
+        String message = "I don't know what you want me to do about that ㅠ.ㅠ";
+        wrapTextWithLines(message);
+    }
+
     // Handles the commands inputted to the chatbot
-    private static void handleInput(String command, String desc) {
-        if (command.equalsIgnoreCase("list")) {
-            printList();
-        } else if (command.equalsIgnoreCase("mark")) {
-            markTask(Integer.parseInt(desc));
-        } else if (command.equalsIgnoreCase("unmark")) {
-            unmarkTask(Integer.parseInt(desc));
-        } else {
-            addTask(command);
+    private static void handleInput(Command command, String desc) {
+        switch (command) {
+            case LIST:
+                printList();
+                break;
+            case MARK:
+                markTask(Integer.parseInt(desc));
+                break;
+            case UNMARK:
+                unmarkTask(Integer.parseInt(desc));
+                break;
+            case TODO:
+                addToDo(desc);
+                break;
+            case UNKNOWN:
+                printErrorMsg();
+                break;
         }
     }
 
@@ -105,11 +136,11 @@ public class Blue {
             System.out.print("> ");
             String input = scanner.nextLine().trim();   // reads user input. trim to remove whitespace at front n end of message
             String[] parts = input.split("\\s+", 2);    // split text into first word (command) and second part which is rest of the message
-            String command = parts[0];  // first word
+            Command command = Command.check(parts[0]);  // first word
             String desc = (parts.length > 1) ? parts[1] : "";   // rest of the message otherwise empty string
 
             // check if an exit command was given to quit the bot
-            if (checkExitInput(command)) {
+            if (command.isExitCommand()) {
                 bye();
                 break;
             }

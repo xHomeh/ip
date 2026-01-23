@@ -6,6 +6,9 @@ public enum Command {
     LIST,
     MARK,
     UNMARK,
+    TODO,
+    DEADLINE,
+    EVENT,
     UNKNOWN;
 
     public boolean isExitCommand() {
