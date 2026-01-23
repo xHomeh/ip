@@ -2,19 +2,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Blue {
-    private static class Task {
-        private String name;
-
-        private Task(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public String toString() {
-            return name;
-        }
-    }
-
     private static ArrayList<Task> taskList = new ArrayList<>();
     private static final String line = "__________________________________________________ \n";
 
@@ -38,7 +25,7 @@ public class Blue {
     // Prints the goodbye message when the chatbot is quit
     private static void bye() {
         String goodbye = line
-                    + "Byeee~ See you soon! \n"
+                    + "Byeee (^_^)/~ See you soon! \n"
                     + line;
         System.out.print(goodbye);
     }
