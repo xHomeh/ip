@@ -1,12 +1,25 @@
 public class Task {
-    private String name;
+    private final String description;
+    private boolean isDone = false;
 
-    public Task(String name) {
-        this.name = name;
+    public Task(String description) {
+        this.description = description;
+    }
+
+    public void markDone() {
+        this.isDone = true;
+    }
+
+    public void unmarkDone() {
+        this.isDone = false;
     }
 
     @Override
     public String toString() {
-        return name;
+        String checkbox = "[ ] ";
+        if (isDone) {
+            checkbox = "[X] ";
+        }
+        return checkbox + description;
     }
 }
