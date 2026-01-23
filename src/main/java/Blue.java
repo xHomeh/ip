@@ -54,6 +54,7 @@ public class Blue {
         wrapTextWithLines(message);
     }
 
+    // message printed when a new task is added
     private static void addTaskMessage(Task task) {
         String message = "Okay! I'll add this task now! \n"
                     + task.toString() + "\n"
@@ -61,6 +62,7 @@ public class Blue {
         wrapTextWithLines(message);
     }
 
+    // add new ToDo to the list
     private  static void addToDo(String input) {
         Task task = new ToDo(input);
         taskList.add(task);
@@ -86,6 +88,7 @@ public class Blue {
         System.out.println(line);
     }
 
+    // mark task as done
     private static void markTask(int idx) {
         Task task = taskList.get(idx-1);
         task.markDone();
@@ -94,6 +97,7 @@ public class Blue {
         wrapTextWithLines(message);
     }
 
+    // mark task as undone
     private static void unmarkTask(int idx) {
         Task task = taskList.get(idx-1);
         task.unmarkDone();
@@ -102,6 +106,7 @@ public class Blue {
         wrapTextWithLines(message);
     }
 
+    // message for unknown commands
     private static void printErrorMsg() {
         String message = "I don't know what you want me to do about that ㅠ.ㅠ";
         wrapTextWithLines(message);

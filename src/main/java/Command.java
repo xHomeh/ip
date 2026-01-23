@@ -11,6 +11,7 @@ public enum Command {
     EVENT,
     UNKNOWN;
 
+    // checks if the command given is an exit command to quit the chatbot
     public boolean isExitCommand() {
         return switch (this) {
             case EXIT, BYE, QUIT, Q -> true;
@@ -18,6 +19,7 @@ public enum Command {
         };
     }
 
+    // changes input string to a Command
     public static Command check(String input) {
         try {
             return Command.valueOf(input.toUpperCase());
