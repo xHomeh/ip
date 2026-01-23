@@ -7,12 +7,14 @@ public class Blue {
 
     // Prints the greeting message when the chatbot starts running
     private static void greet() {
-        String logo = " ____  _            \n"
-                + "|  _ \\| |             \n"
-                + "| |_) | |_   _  ___    \n"
-                + "|  _ <| | | | |/ _ \\  \n"
-                + "| |_) | | |_| |  __/   \n"
-                + "|____/|_|\\__,_|\\___| \n";
+        String logo = """
+                 ____  _           \s
+                |  _ \\| |            \s
+                | |_) | |_   _  ___   \s
+                |  _ <| | | | |/ _ \\ \s
+                | |_) | | |_| |  __/  \s
+                |____/|_|\\__,_|\\___|\s
+                """;
         System.out.print(logo);
 
         String greeting = line
@@ -76,6 +78,12 @@ public class Blue {
         addTaskMessage(task);
     }
 
+    private static void addEvent(String desc, String to, String from) {
+        Task task = new Event(desc, to, from);
+        taskList.add(task);
+        addTaskMessage(task);
+    }
+
     // print out the list of stored text
     private static void printList() {
         int size = taskList.size();
@@ -100,7 +108,7 @@ public class Blue {
         Task task = taskList.get(idx-1);
         task.markDone();
         String message = "YAY this task is now done!! ^o^ \n"
-                + task.toString();
+                + task;
         wrapTextWithLines(message);
     }
 
@@ -109,7 +117,7 @@ public class Blue {
         Task task = taskList.get(idx-1);
         task.unmarkDone();
         String message = "I thought you already did that ㅜ_ㅜ \n"
-                + task.toString();
+                + task;
         wrapTextWithLines(message);
     }
 
@@ -120,25 +128,34 @@ public class Blue {
     }
 
     // Handles the commands inputted to the chatbot
-    private static void handleInput(Command command, String desc) {
+    private static void handleInput(Command command, String input) {
         switch (command) {
             case LIST:
                 printList();
                 break;
             case MARK:
-                markTask(Integer.parseInt(desc));
+                markTask(Integer.parseInt(input));
                 break;
             case UNMARK:
-                unmarkTask(Integer.parseInt(desc));
+                unmarkTask(Integer.parseInt(input));
                 break;
             case TODO:
-                addToDo(desc);
+                addToDo(input);
                 break;
             case DEADLINE:
-                String[] parts = desc.split("/by ", 2);
-                String name = parts[0].trim();
-                String due = parts[1];
-                addDeadline(name, due);
+                String[] by = input.split("/by ", 2);
+                String deadlineDesc = by[0].trim();
+                String due = by[1].trim();
+                addDeadline(deadlineDesc, due);
+                break;
+            case EVENT:
+                String[] fromSplitArr = input.split("/from ", 2);
+                String eventDesc = fromSplitArr[0].trim();
+                String eventRemainder = fromSplitArr[1].trim();
+                String[] toSplitArr = eventRemainder.split("/to ", 2);
+                String from = toSplitArr[0].trim();
+                String to = toSplitArr[1].trim();
+                addEvent(eventDesc, from, to);
                 break;
             case UNKNOWN:
                 printErrorMsg();
@@ -152,10 +169,10 @@ public class Blue {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("> ");
-            String input = scanner.nextLine().trim();   // reads user input. trim to remove whitespace at front n end of message
-            String[] parts = input.split("\\s+", 2);    // split text into first word (command) and second part which is rest of the message
+            String userTextInput = scanner.nextLine().trim();   // reads user input. trim to remove whitespace at front n end of message
+            String[] parts = userTextInput.split("\\s+", 2);    // split text into first word (command) and second part which is rest of the message
             Command command = Command.check(parts[0]);  // first word
-            String desc = (parts.length > 1) ? parts[1] : "";   // rest of the message otherwise empty string
+            String input = (parts.length > 1) ? parts[1] : "";   // rest of the message otherwise empty string
 
             // check if an exit command was given to quit the bot
             if (command.isExitCommand()) {
@@ -163,7 +180,7 @@ public class Blue {
                 break;
             }
 
-            handleInput(command, desc);
+            handleInput(command, input);
         }
     }
 }
