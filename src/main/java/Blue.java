@@ -21,7 +21,7 @@ public class Blue {
                 + "Hi☆・*。It's me, Blue! \n"
                 + "What do you need help with? \n"
                 + line;
-        System.out.print(greeting);
+        System.out.println(greeting);
     }
 
     // Prints the goodbye message when the chatbot is quit
@@ -78,6 +78,7 @@ public class Blue {
         addTaskMessage(task);
     }
 
+    // add new Event to the list
     private static void addEvent(String desc, String to, String from) {
         Task task = new Event(desc, to, from);
         taskList.add(task);
