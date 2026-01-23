@@ -60,7 +60,7 @@ public class Blue {
 
         System.out.print(line);
 
-        for (int i = 0; i < size + 0; i++) {
+        for (int i = 0; i < size; i++) {
             String message = (i+1) + ". " + taskList.get(i).toString();
             System.out.println(message);
         }
@@ -68,12 +68,32 @@ public class Blue {
         System.out.println(line);
     }
 
+    private static void markTask(int idx) {
+        Task task = taskList.get(idx-1);
+        task.markDone();
+        String message = "YAY this task is now done!! ^o^ \n"
+                    + task.toString();
+        wrapTextWithLines(message);
+    }
+
+    private static void unmarkTask(int idx) {
+        Task task = taskList.get(idx-1);
+        task.unmarkDone();
+        String message = "I thought you already did that ㅜ_ㅜ \n"
+                + task.toString();
+        wrapTextWithLines(message);
+    }
+
     // Handles the commands inputted to the chatbot
-    private static void handleInput(String input) {
-        if (input.equalsIgnoreCase("list")) {
+    private static void handleInput(String command, String desc) {
+        if (command.equalsIgnoreCase("list")) {
             printList();
+        } else if (command.equalsIgnoreCase("mark")) {
+            markTask(Integer.parseInt(desc));
+        } else if (command.equalsIgnoreCase("unmark")) {
+            unmarkTask(Integer.parseInt(desc));
         } else {
-            addTask(input);
+            addTask(command);
         }
     }
 
@@ -83,14 +103,18 @@ public class Blue {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("> ");
-            String input = scanner.nextLine();
+            String input = scanner.nextLine().trim();   // reads user input. trim to remove whitespace at front n end of message
+            String[] parts = input.split("\\s+", 2);    // split text into first word (command) and second part which is rest of the message
+            String command = parts[0];  // first word
+            String desc = (parts.length > 1) ? parts[1] : "";   // rest of the message otherwise empty string
 
-            if (checkExitInput(input)) {
+            // check if an exit command was given to quit the bot
+            if (checkExitInput(command)) {
                 bye();
                 break;
             }
 
-            handleInput(input);
+            handleInput(command, desc);
         }
     }
 }
