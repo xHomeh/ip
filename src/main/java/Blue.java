@@ -63,8 +63,15 @@ public class Blue {
     }
 
     // add new ToDo to the list
-    private  static void addToDo(String input) {
+    private static void addToDo(String input) {
         Task task = new ToDo(input);
+        taskList.add(task);
+        addTaskMessage(task);
+    }
+
+    // add new Deadline to the list
+    private static void addDeadline(String desc, String due) {
+        Task task = new Deadline(desc, due);
         taskList.add(task);
         addTaskMessage(task);
     }
@@ -126,6 +133,12 @@ public class Blue {
                 break;
             case TODO:
                 addToDo(desc);
+                break;
+            case DEADLINE:
+                String[] parts = desc.split("/by ", 2);
+                String name = parts[0].trim();
+                String due = parts[1];
+                addDeadline(name, due);
                 break;
             case UNKNOWN:
                 printErrorMsg();
