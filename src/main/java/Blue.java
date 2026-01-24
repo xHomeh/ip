@@ -129,20 +129,21 @@ public class Blue {
     }
 
     // Handles the commands inputted to the chatbot
-    private static void handleInput(Command command, String input) {
+    private static void handleInput(Command command, String input) throws BlueException {
         switch (command) {
             case LIST:
                 printList();
                 break;
             case MARK:
-                markTask(Integer.parseInt(input));
+                int markIdx = getMarkIdx(input);
+                markTask(markIdx);
                 break;
             case UNMARK:
                 unmarkTask(Integer.parseInt(input));
                 break;
             case TODO:
                 if (input.isEmpty()) {
-                    wrapTextWithLines("The description can't be empty! =/");
+                    throw new BlueException("The description can't be empty! =/");
                 }
                 addToDo(input);
                 break;
@@ -167,6 +168,23 @@ public class Blue {
         }
     }
 
+    // helper function to handle input for MARK case
+    private static int getMarkIdx(String input) throws BlueException {
+        int markIdx;
+        try {
+            markIdx = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
+        }
+        if (markIdx <= 0) {
+            throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
+        }
+        if (markIdx > taskList.size()) {
+            throw new BlueException("There isn't a task " + markIdx + "!  (•̀⤙•́ )");
+        }
+        return markIdx;
+    }
+
     public static void main(String[] args) {
         greet();
 
@@ -183,7 +201,12 @@ public class Blue {
                 bye();
                 break;
             }
-            handleInput(command, input);
+            try {
+                handleInput(command, input);
+            } catch (BlueException e) {
+                String errorMessage = e.getMessage();
+                wrapTextWithLines(errorMessage);
+            }
         }
     }
 }
