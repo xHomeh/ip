@@ -123,7 +123,8 @@ public class Blue {
                 markTask(markIdx);
                 break;
             case UNMARK:
-                unmarkTask(Integer.parseInt(input));
+                int unmarkIdx = getUnmarkIdx(input);
+                unmarkTask(unmarkIdx);
                 break;
             case TODO:
                 if (input.isEmpty()) {
@@ -167,6 +168,23 @@ public class Blue {
             throw new BlueException("There isn't a task " + markIdx + "!  (•̀⤙•́ )");
         }
         return markIdx;
+    }
+
+    // helper function to handle input for UNMARK case
+    private static int getUnmarkIdx(String input) throws BlueException {
+        int unmarkIdx;
+        try {
+            unmarkIdx = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
+        }
+        if (unmarkIdx <= 0) {
+            throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
+        }
+        if (unmarkIdx > taskList.size()) {
+            throw new BlueException("There isn't a task " + unmarkIdx + "!  (•̀⤙•́ )");
+        }
+        return unmarkIdx;
     }
 
     public static void main(String[] args) {
