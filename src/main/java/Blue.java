@@ -201,6 +201,7 @@ public class Blue {
         return result;
     }
 
+    // helper function to handle input for EVENT case, returns a String array of length 3
     private static String[] getEventInfo(String input) throws BlueException {
         String[] result = new String[3];
         if (input.isEmpty()) {
