@@ -133,22 +133,8 @@ public class Blue {
                 addToDo(input);
                 break;
             case DEADLINE:
-                if (input.isEmpty()) {
-                    throw new BlueException("The description can't be empty! =/");
-                }
-                String[] by = input.split("/by", 2);
-                String deadlineDesc = by[0].trim();
-
-                BlueException deadlineException = new BlueException("Deadlines must have a deadline... (ꐦ¬_¬)");
-
-                if (by.length < 2) {
-                    throw deadlineException;
-                }
-                String due = by[1].trim();
-                if (due.isEmpty()) {
-                    throw deadlineException;
-                }
-                addDeadline(deadlineDesc, due);
+                String[] deadlineInfo = getDeadlineInfo(input);
+                addDeadline(deadlineInfo[0], deadlineInfo[1]);
                 break;
             case EVENT:
                 if (input.isEmpty()) {
@@ -215,6 +201,27 @@ public class Blue {
             throw new BlueException("There isn't a task " + unmarkIdx + "!  (•̀⤙•́ )");
         }
         return unmarkIdx;
+    }
+
+    // helper function to handle input for DEADLINE case, returns a String array of length 2
+    private static String[] getDeadlineInfo(String input) throws BlueException {
+        String[] result = new String[2];
+        if (input.isEmpty()) {
+            throw new BlueException("The description can't be empty! =/");
+        }
+        String[] by = input.split("/by", 2);
+        result[0] = by[0].trim();
+
+        BlueException deadlineException = new BlueException("Deadlines must have a deadline... (ꐦ¬_¬)");
+
+        if (by.length < 2) {
+            throw deadlineException;
+        }
+        result[1] = by[1].trim();
+        if (result[1].isEmpty()) {
+            throw deadlineException;
+        }
+        return result;
     }
 
     public static void main(String[] args) {
