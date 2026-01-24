@@ -9,6 +9,7 @@ public enum Command {
     TODO,
     DEADLINE,
     EVENT,
+    DELETE,
     UNKNOWN;
 
     // checks if the command given is an exit command to quit the chatbot
