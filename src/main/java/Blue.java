@@ -123,7 +123,7 @@ public class Blue {
                 markTask(markIdx);
                 break;
             case UNMARK:
-                int unmarkIdx = getUnmarkIdx(input);
+                int unmarkIdx = getMarkIdx(input);
                 unmarkTask(unmarkIdx);
                 break;
             case TODO:
@@ -139,6 +139,9 @@ public class Blue {
             case EVENT:
                 String[] eventInfo = getEventInfo(input);
                 addEvent(eventInfo[0], eventInfo[1], eventInfo[2]);
+                break;
+            case DELETE:
+                int deleteIdx = getMarkIdx(input);
                 break;
             case UNKNOWN:
                 printErrorMsg();
@@ -161,23 +164,6 @@ public class Blue {
             throw new BlueException("There isn't a task " + markIdx + "!  (•̀⤙•́ )");
         }
         return markIdx;
-    }
-
-    // helper function to handle input for UNMARK case
-    private static int getUnmarkIdx(String input) throws BlueException {
-        int unmarkIdx;
-        try {
-            unmarkIdx = Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
-        }
-        if (unmarkIdx <= 0) {
-            throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
-        }
-        if (unmarkIdx > taskList.size()) {
-            throw new BlueException("There isn't a task " + unmarkIdx + "!  (•̀⤙•́ )");
-        }
-        return unmarkIdx;
     }
 
     // helper function to handle input for DEADLINE case, returns a String array of length 2
