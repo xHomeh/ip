@@ -106,6 +106,14 @@ public class Blue {
         wrapTextWithLines(message);
     }
 
+    private static void deleteTask(int idx) {
+        Task task = taskList.get(idx-1);
+        taskList.remove(idx-1);
+        String message = "Okay, I deleted that for you! \n"
+                + task;
+        wrapTextWithLines(message);
+    }
+
     // message for unknown commands
     private static void printErrorMsg() {
         String message = "I don't know what you want me to do about that ㅠ.ㅠ";
@@ -142,6 +150,7 @@ public class Blue {
                 break;
             case DELETE:
                 int deleteIdx = getMarkIdx(input);
+                deleteTask(deleteIdx);
                 break;
             case UNKNOWN:
                 printErrorMsg();
