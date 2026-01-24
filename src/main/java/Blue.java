@@ -137,31 +137,8 @@ public class Blue {
                 addDeadline(deadlineInfo[0], deadlineInfo[1]);
                 break;
             case EVENT:
-                if (input.isEmpty()) {
-                    throw new BlueException("The description can't be empty! =/");
-                }
-                String[] fromSplitArr = input.split("/from", 2);
-                String eventDesc = fromSplitArr[0].trim();
-
-                BlueException eventException = new BlueException("Events must have start and end times!!! <(˶`ロ´˶)> ");
-
-                if (fromSplitArr.length < 2) {
-                    throw eventException;
-                }
-                String eventRemainder = fromSplitArr[1].trim();
-                if (eventRemainder.isEmpty()) {
-                    throw eventException;
-                }
-                String[] toSplitArr = eventRemainder.split("/to", 2);
-                String from = toSplitArr[0].trim();
-                if (toSplitArr.length < 2) {
-                    throw eventException;
-                }
-                String to = toSplitArr[1].trim();
-                if (to.isEmpty()) {
-                    throw eventException;
-                }
-                addEvent(eventDesc, from, to);
+                String[] eventInfo = getEventInfo(input);
+                addEvent(eventInfo[0], eventInfo[1], eventInfo[2]);
                 break;
             case UNKNOWN:
                 printErrorMsg();
@@ -220,6 +197,35 @@ public class Blue {
         result[1] = by[1].trim();
         if (result[1].isEmpty()) {
             throw deadlineException;
+        }
+        return result;
+    }
+
+    private static String[] getEventInfo(String input) throws BlueException {
+        String[] result = new String[3];
+        if (input.isEmpty()) {
+            throw new BlueException("The description can't be empty! =/");
+        }
+        String[] fromSplitArr = input.split("/from", 2);
+        result[0] = fromSplitArr[0].trim();
+
+        BlueException eventException = new BlueException("Events must have start and end times!!! <(˶`ロ´˶)> ");
+
+        if (fromSplitArr.length < 2) {
+            throw eventException;
+        }
+        String eventRemainder = fromSplitArr[1].trim();
+        if (eventRemainder.isEmpty()) {
+            throw eventException;
+        }
+        String[] toSplitArr = eventRemainder.split("/to", 2);
+        result[1] = toSplitArr[0].trim();
+        if (toSplitArr.length < 2) {
+            throw eventException;
+        }
+        result[2] = toSplitArr[1].trim();
+        if (result[2].isEmpty()) {
+            throw eventException;
         }
         return result;
     }
