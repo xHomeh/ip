@@ -133,18 +133,48 @@ public class Blue {
                 addToDo(input);
                 break;
             case DEADLINE:
-                String[] by = input.split("/by ", 2);
+                if (input.isEmpty()) {
+                    throw new BlueException("The description can't be empty! =/");
+                }
+                String[] by = input.split("/by", 2);
                 String deadlineDesc = by[0].trim();
+
+                BlueException deadlineException = new BlueException("Deadlines must have a deadline... (ꐦ¬_¬)");
+
+                if (by.length < 2) {
+                    throw deadlineException;
+                }
                 String due = by[1].trim();
+                if (due.isEmpty()) {
+                    throw deadlineException;
+                }
                 addDeadline(deadlineDesc, due);
                 break;
             case EVENT:
-                String[] fromSplitArr = input.split("/from ", 2);
+                if (input.isEmpty()) {
+                    throw new BlueException("The description can't be empty! =/");
+                }
+                String[] fromSplitArr = input.split("/from", 2);
                 String eventDesc = fromSplitArr[0].trim();
+
+                BlueException eventException = new BlueException("Events must have start and end times!!! <(˶`ロ´˶)> ");
+
+                if (fromSplitArr.length < 2) {
+                    throw eventException;
+                }
                 String eventRemainder = fromSplitArr[1].trim();
-                String[] toSplitArr = eventRemainder.split("/to ", 2);
+                if (eventRemainder.isEmpty()) {
+                    throw eventException;
+                }
+                String[] toSplitArr = eventRemainder.split("/to", 2);
                 String from = toSplitArr[0].trim();
+                if (toSplitArr.length < 2) {
+                    throw eventException;
+                }
                 String to = toSplitArr[1].trim();
+                if (to.isEmpty()) {
+                    throw eventException;
+                }
                 addEvent(eventDesc, from, to);
                 break;
             case UNKNOWN:
