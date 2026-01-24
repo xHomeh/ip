@@ -141,6 +141,9 @@ public class Blue {
                 unmarkTask(Integer.parseInt(input));
                 break;
             case TODO:
+                if (input.isEmpty()) {
+                    wrapTextWithLines("The description can't be empty! =/");
+                }
                 addToDo(input);
                 break;
             case DEADLINE:
@@ -180,7 +183,6 @@ public class Blue {
                 bye();
                 break;
             }
-
             handleInput(command, input);
         }
     }
