@@ -32,28 +32,12 @@ public class Blue {
         System.out.print(goodbye);
     }
 
-    // Returns a boolean and checks if the user typed either quit, bye, or exit to quit the chatbot
-    private static boolean checkExitInput(Command input) {
-        return input.equals(Command.EXIT)
-                || input.equals(Command.BYE)
-                || input.equals(Command.QUIT)
-                || input.equals(Command.Q);
-    }
-
     // Wrap string with lines on the top and bottom
     private static void wrapTextWithLines(String str) {
         String wrappedText = line
                 + str + "\n"
                 + line;
         System.out.println(wrappedText);
-    }
-
-    // Add new task to taskList
-    private static void addTask(String input) {
-        Task task = new Task(input);
-        taskList.add(task);
-        String message = "Added: " + input;
-        wrapTextWithLines(message);
     }
 
     // message printed when a new task is added
