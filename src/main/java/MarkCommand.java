@@ -23,5 +23,7 @@ public class MarkCommand extends Command {
         task.markDone();
 
         ui.taskMarkMessage(task);
+
+        storage.save(taskList);
     }
 }

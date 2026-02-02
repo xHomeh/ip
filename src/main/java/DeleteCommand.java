@@ -22,5 +22,7 @@ public class DeleteCommand extends Command {
         Task task = taskList.get(idx - 1);
         taskList.remove(idx - 1);
         ui.deleteTaskMessage(task);
+
+        storage.save(taskList);
     }
 }

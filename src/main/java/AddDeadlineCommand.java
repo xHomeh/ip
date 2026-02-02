@@ -37,6 +37,8 @@ public class AddDeadlineCommand extends Command {
             Task task = new Deadline(deadlineInfo[0], deadlineInfo[1]);
             taskList.add(task);
             ui.addTaskMessage(task, taskList.size());
+
+            storage.save(taskList);
         } catch (DateTimeParseException e) {
             throw new BlueException("Uh oh! I don't understand that date format, try yyyy-mm-dd!");
         }

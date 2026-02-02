@@ -44,6 +44,8 @@ public class AddEventCommand extends Command {
             Task task = new Event(eventInfo[0], eventInfo[1], eventInfo[2]);
             taskList.add(task);
             ui.addTaskMessage(task, taskList.size());
+
+            storage.save(taskList);
         } catch (DateTimeParseException e) {
             throw new BlueException("Uh oh! I don't understand that date format, try yyyy-mm-dd!");
         }

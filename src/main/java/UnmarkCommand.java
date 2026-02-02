@@ -23,5 +23,7 @@ public class UnmarkCommand extends Command {
         task.unmarkDone();
 
         ui.taskUnmarkMessage(task);
+
+        storage.save(taskList);
     }
 }

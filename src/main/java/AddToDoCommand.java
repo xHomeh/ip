@@ -12,5 +12,7 @@ public class AddToDoCommand extends Command {
         Task task = new ToDo(description);
         taskList.add(task);
         ui.addTaskMessage(task, taskList.size());
+
+        storage.save(taskList);
     }
 }
