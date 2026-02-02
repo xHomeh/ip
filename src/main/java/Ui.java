@@ -1,5 +1,10 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Ui {
     private static final String line = "__________________________________________________ \n";
+
+    private final Scanner scanner = new Scanner(System.in);
 
     // Prints the greeting message when the chatbot starts running
     public void greet() {
@@ -28,6 +33,14 @@ public class Ui {
         System.out.print(goodbye);
     }
 
+    public void commandLine() {
+        System.out.println("> ");
+    }
+
+    public String readCommand() {
+        return scanner.nextLine().trim();
+    }
+
     // Wrap string with lines on the top and bottom
     public void wrapTextWithLines(String str) {
         String wrappedText = line
@@ -36,10 +49,45 @@ public class Ui {
         System.out.println(wrappedText);
     }
 
-    private void addTaskMessage(Task task, int size) {
+    public void printList(ArrayList<Task> tasks) {
+        int size = tasks.size();
+        if (size == 0) {
+            wrapTextWithLines("Wow! There's nothing to do!");
+            return;
+        }
+
+        System.out.print(line);
+
+        for (int i = 0; i < size; i++) {
+            String message = (i+1) + ". " + tasks.get(i).toString();
+            System.out.println(message);
+        }
+
+        System.out.println(line);
+    }
+
+    public void addTaskMessage(Task task, int size) {
         String message = "Okay! I'll add this task now! \n"
                 + task + "\n"
                 + String.format("You have %d tasks!", size);
+        wrapTextWithLines(message);
+    }
+
+    public void taskMarkMessage(Task task) {
+        String message = "YAY this task is now done!! ^o^ \n"
+                + task;
+        wrapTextWithLines(message);
+    }
+
+    public void taskUnmarkMessage(Task task) {
+        String message = "Okay, I deleted that for you! \n"
+                + task;
+        wrapTextWithLines(message);
+    }
+
+    public void deleteTaskMessage(Task task) {
+        String message = "Okay, I deleted that for you! \n"
+                + task;
         wrapTextWithLines(message);
     }
 

@@ -15,7 +15,19 @@ public class TaskList {
         tasks.add(task);
     }
 
+    public void remove(int idx) {
+        tasks.remove(idx);
+    }
+
     public int size() {
         return tasks.size();
+    }
+
+    public Task get(int idx) {
+        return tasks.get(idx);
+    }
+
+    public ArrayList<Task> getTasks() {
+        return tasks;
     }
 }
