@@ -15,8 +15,8 @@ public class Storage {
         this.filePath = Paths.get("data", fileName);
     }
 
-    public List<Task> load() throws BlueException {
-        List<Task> tasks = new ArrayList<>();
+    public ArrayList<Task> load() throws BlueException {
+        ArrayList<Task> tasks = new ArrayList<>();
 
         if (!Files.exists(filePath)) {
             return tasks;
@@ -64,7 +64,7 @@ public class Storage {
         }
 
         String type = parts[0];
-        Boolean isDone = parts[1].equals("1");
+        boolean isDone = parts[1].equals("1");
         String description = parts[2];
 
         Task task;
