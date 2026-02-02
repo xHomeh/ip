@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import java.time.format.DateTimeParseException;
+
 public class Blue {
     private static ArrayList<Task> taskList = new ArrayList<>();
     private static final String line = "__________________________________________________ \n";
@@ -56,17 +58,25 @@ public class Blue {
     }
 
     // add new Deadline to the list
-    private static void addDeadline(String desc, String due) {
-        Task task = new Deadline(desc, due);
-        taskList.add(task);
-        addTaskMessage(task);
+    private static void addDeadline(String desc, String due) throws BlueException {
+        try {
+            Task task = new Deadline(desc, due);
+            taskList.add(task);
+            addTaskMessage(task);
+        } catch (DateTimeParseException e) {
+            throw new BlueException("Uh oh! I don't understand that date format, try yyyy-mm-dd!");
+        }
     }
 
     // add new Event to the list
-    private static void addEvent(String desc, String to, String from) {
-        Task task = new Event(desc, to, from);
-        taskList.add(task);
-        addTaskMessage(task);
+    private static void addEvent(String desc, String to, String from) throws BlueException {
+        try {
+            Task task = new Event(desc, to, from);
+            taskList.add(task);
+            addTaskMessage(task);
+        } catch (DateTimeParseException e) {
+            throw new BlueException("Uh oh! I don't understand that date format, try yyyy-mm-dd!");
+        }
     }
 
     // print out the list of stored text
