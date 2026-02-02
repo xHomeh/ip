@@ -34,7 +34,7 @@ public class Ui {
     }
 
     public void commandLine() {
-        System.out.println("> ");
+        System.out.print("> ");
     }
 
     public String readCommand() {
