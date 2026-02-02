@@ -38,13 +38,13 @@ public class Storage {
         return tasks;
     }
 
-    public void save(ArrayList<Task> tasks) throws BlueException {
+    public void save(TaskList taskList) throws BlueException {
         try {
             Files.createDirectories(filePath.getParent());
 
             List<String> lines = new ArrayList<>();
 
-            for (Task t : tasks) {
+            for (Task t : taskList.getTasks()) {
                 lines.add(t.toStorageString());
             }
 

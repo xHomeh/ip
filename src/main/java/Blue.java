@@ -4,286 +4,41 @@ import java.util.Scanner;
 import java.time.format.DateTimeParseException;
 
 public class Blue {
-    private static ArrayList<Task> taskList = new ArrayList<>();
+    private static ArrayList<Task> taskL_Old = new ArrayList<>();
     private static final String line = "__________________________________________________ \n";
+    private Ui ui;
+    private Storage storage;
+    private TaskList taskList;
 
-    // Prints the greeting message when the chatbot starts running
-    private static void greet() {
-        String logo = """
-                 ____  _           \s
-                |  _ \\| |            \s
-                | |_) | |_   _  ___   \s
-                |  _ <| | | | |/ _ \\ \s
-                | |_) | | |_| |  __/  \s
-                |____/|_|\\__,_|\\___|\s
-                """;
-        System.out.print(logo);
-
-        String greeting = line
-                + "Hi☆・*。It's me, Blue! \n"
-                + "What do you need help with? \n"
-                + line;
-        System.out.println(greeting);
-    }
-
-    // Prints the goodbye message when the chatbot is quit
-    private static void bye() {
-        String goodbye = line
-                + "Byeee (^_^)/~ See you soon! \n"
-                + line;
-        System.out.print(goodbye);
-    }
-
-    // Wrap string with lines on the top and bottom
-    private static void wrapTextWithLines(String str) {
-        String wrappedText = line
-                + str + "\n"
-                + line;
-        System.out.println(wrappedText);
-    }
-
-    // message printed when a new task is added
-    private static void addTaskMessage(Task task) {
-        String message = "Okay! I'll add this task now! \n"
-                    + task.toString() + "\n"
-                    + String.format("You have %d tasks!", taskList.size());
-        wrapTextWithLines(message);
-    }
-
-    // add new ToDo to the list
-    private static void addToDo(String input) {
-        Task task = new ToDo(input);
-        taskList.add(task);
-        addTaskMessage(task);
-    }
-
-    // add new Deadline to the list
-    private static void addDeadline(String desc, String due) throws BlueException {
+    public Blue(String fileName) {
+        ui = new Ui();
+        storage = new Storage(fileName);
         try {
-            Task task = new Deadline(desc, due);
-            taskList.add(task);
-            addTaskMessage(task);
-        } catch (DateTimeParseException e) {
-            throw new BlueException("Uh oh! I don't understand that date format, try yyyy-mm-dd!");
+            taskList = new TaskList(storage.load());
+        } catch (BlueException e) {
+            ui.showTaskLoadingError();
+            taskList = new TaskList();
         }
     }
 
-    // add new Event to the list
-    private static void addEvent(String desc, String to, String from) throws BlueException {
-        try {
-            Task task = new Event(desc, to, from);
-            taskList.add(task);
-            addTaskMessage(task);
-        } catch (DateTimeParseException e) {
-            throw new BlueException("Uh oh! I don't understand that date format, try yyyy-mm-dd!");
-        }
-    }
-
-    // print out the list of stored text
-    private static void printList() {
-        int size = taskList.size();
-
-        if (size == 0) {
-            wrapTextWithLines("Wow! There's nothing to do!");
-            return;
-        }
-
-        System.out.print(line);
-
-        for (int i = 0; i < size; i++) {
-            String message = (i+1) + ". " + taskList.get(i).toString();
-            System.out.println(message);
-        }
-
-        System.out.println(line);
-    }
-
-    // mark task as done
-    private static void markTask(int idx) {
-        Task task = taskList.get(idx-1);
-        task.markDone();
-        String message = "YAY this task is now done!! ^o^ \n"
-                + task;
-        wrapTextWithLines(message);
-    }
-
-    // mark task as undone
-    private static void unmarkTask(int idx) {
-        Task task = taskList.get(idx-1);
-        task.unmarkDone();
-        String message = "I thought you already did that ㅜ_ㅜ \n"
-                + task;
-        wrapTextWithLines(message);
-    }
-
-    private static void deleteTask(int idx) {
-        Task task = taskList.get(idx-1);
-        taskList.remove(idx-1);
-        String message = "Okay, I deleted that for you! \n"
-                + task;
-        wrapTextWithLines(message);
-    }
-
-    // message for unknown commands
-    private static void printErrorMsg() {
-        String message = "I don't know what you want me to do about that ㅠ.ㅠ";
-        wrapTextWithLines(message);
-    }
-
-    // Handles the commands inputted to the chatbot
-    private static void handleInput(Command command, String input) throws BlueException {
-        switch (command) {
-        case LIST:
-            printList();
-            break;
-        case MARK:
-            int markIdx = getMarkIdx(input);
-            markTask(markIdx);
-            break;
-        case UNMARK:
-            int unmarkIdx = getMarkIdx(input);
-            unmarkTask(unmarkIdx);
-            break;
-        case TODO:
-            if (input.isEmpty()) {
-                throw new BlueException("The description can't be empty! =/");
+    public void run() {
+        ui.greet();
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                ui.commandLine();
+                String input = ui.readCommand();
+                Command c = Parser.parseInput(input);
+                c.execute(taskList, ui, storage);
+                isExit = c.isExit();
+            } catch (BlueException e) {
+                ui.wrapTextWithLines(e.getMessage());
             }
-            addToDo(input);
-            break;
-        case DEADLINE:
-            String[] deadlineInfo = getDeadlineInfo(input);
-            addDeadline(deadlineInfo[0], deadlineInfo[1]);
-            break;
-        case EVENT:
-            String[] eventInfo = getEventInfo(input);
-            addEvent(eventInfo[0], eventInfo[1], eventInfo[2]);
-            break;
-        case DELETE:
-            int deleteIdx = getMarkIdx(input);
-            deleteTask(deleteIdx);
-            break;
-        case UNKNOWN:
-            printErrorMsg();
-            break;
         }
-    }
-
-    // helper function to handle input for MARK case
-    private static int getMarkIdx(String input) throws BlueException {
-        int markIdx;
-        try {
-            markIdx = Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
-        }
-        if (markIdx <= 0) {
-            throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
-        }
-        if (markIdx > taskList.size()) {
-            throw new BlueException("There isn't a task " + markIdx + "!  (•̀⤙•́ )");
-        }
-        return markIdx;
-    }
-
-    // helper function to handle input for DEADLINE case, returns a String array of length 2
-    private static String[] getDeadlineInfo(String input) throws BlueException {
-        String[] result = new String[2];
-        BlueException emptyException = new BlueException("The description can't be empty! =/");
-
-        if (input.isEmpty()) {
-            throw emptyException;
-        }
-        String[] by = input.split("/by", 2);
-        result[0] = by[0].trim();
-
-        if (result[0].isEmpty()) {
-            throw emptyException;
-        }
-
-        BlueException deadlineException = new BlueException("Deadlines must have a deadline... (ꐦ¬_¬)");
-
-        if (by.length < 2) {
-            throw deadlineException;
-        }
-        result[1] = by[1].trim();
-        if (result[1].isEmpty()) {
-            throw deadlineException;
-        }
-        return result;
-    }
-
-    // helper function to handle input for EVENT case, returns a String array of length 3
-    private static String[] getEventInfo(String input) throws BlueException {
-        String[] result = new String[3];
-        BlueException emptyException = new BlueException("The description can't be empty! =/");
-
-        if (input.isEmpty()) {
-            throw emptyException;
-        }
-        String[] fromSplitArr = input.split("/from", 2);
-        result[0] = fromSplitArr[0].trim();
-
-        if (result[0].isEmpty()) {
-            throw emptyException;
-        }
-
-        BlueException eventException = new BlueException("Events must have start and end times!!! <(˶`ロ´˶)> ");
-
-        if (fromSplitArr.length < 2) {
-            throw eventException;
-        }
-        String eventRemainder = fromSplitArr[1].trim();
-        if (eventRemainder.isEmpty()) {
-            throw eventException;
-        }
-        String[] toSplitArr = eventRemainder.split("/to", 2);
-        result[1] = toSplitArr[0].trim();
-        if (toSplitArr.length < 2) {
-            throw eventException;
-        }
-        result[2] = toSplitArr[1].trim();
-        if (result[2].isEmpty()) {
-            throw eventException;
-        }
-        return result;
+        ui.bye();
     }
 
     public static void main(String[] args) {
-        greet();
-        Storage storage = new Storage("Blue.txt");
-
-        try {
-            Blue.taskList = storage.load();
-        } catch (BlueException e) {
-            String errorMessage = e.getMessage();
-            wrapTextWithLines(errorMessage);
-        }
-
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.print("> ");
-            String userTextInput = scanner.nextLine().trim();   // reads user input. trim to remove whitespace at front n end of message
-            String[] parts = userTextInput.split("\\s+", 2);    // split text into first word (command) and second part which is rest of the message
-            Command command = Command.check(parts[0]);  // first word
-            String input = (parts.length > 1) ? parts[1] : "";   // rest of the message otherwise empty string
-
-            // check if an exit command was given to quit the bot
-            if (command.isExitCommand()) {
-                bye();
-                try {
-                    storage.save(Blue.taskList);
-                } catch (BlueException e) {
-                    String errorMessage = e.getMessage();
-                    wrapTextWithLines(errorMessage);
-                }
-                break;
-            }
-            try {
-                handleInput(command, input);
-            } catch (BlueException e) {
-                String errorMessage = e.getMessage();
-                wrapTextWithLines(errorMessage);
-            }
-        }
+        new Blue("Blue.txt").run();
     }
 }
