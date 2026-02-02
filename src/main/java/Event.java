@@ -10,7 +10,7 @@ public class Event extends Task {
 
     @Override
     public String toStorageString() {
-        return "E | " + super.toStorageString();
+        return "E | " + super.toStorageString() + " | " + this.from + " | " + this.to;
     }
 
     @Override

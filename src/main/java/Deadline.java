@@ -8,7 +8,7 @@ public class Deadline extends Task {
 
     @Override
     public String toStorageString() {
-        return "D | " + super.toStorageString();
+        return "D | " + super.toStorageString() + " | " + this.due;
     }
 
     @Override

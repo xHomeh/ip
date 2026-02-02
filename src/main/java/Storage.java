@@ -9,22 +9,34 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Storage {
-    private final Path FILE_PATH;
+    private final Path filePath;
 
     public Storage(String fileName) {
-        this.FILE_PATH = Paths.get("data", fileName);
+        this.filePath = Paths.get("data", fileName);
     }
 
-    public List<Task> load() {
-        if (!Files.exists(FILE_PATH)) {
-            return new ArrayList<>();
+    public List<Task> load() throws BlueException {
+        List<Task> tasks = new ArrayList<>();
+
+        if (!Files.exists(filePath)) {
+            return tasks;
         }
-        return new ArrayList<>();
+
+        try {
+            List<String> lines = Files.readAllLines(filePath);
+            for (String line : lines) {
+                tasks.add(convertToTask(line));
+            }
+        } catch (IOException e) {
+            throw new BlueException("Failed to load tasks: " + e.getMessage());
+        }
+
+        return tasks;
     }
 
-    public void save(ArrayList<Task> tasks) {
+    public void save(ArrayList<Task> tasks) throws BlueException {
         try {
-            Files.createDirectories(FILE_PATH.getParent());
+            Files.createDirectories(filePath.getParent());
 
             List<String> lines = new ArrayList<>();
 
@@ -33,14 +45,57 @@ public class Storage {
             }
 
             Files.write(
-                    FILE_PATH,
+                    filePath,
                     lines,
                     StandardOpenOption.CREATE,
                     StandardOpenOption.TRUNCATE_EXISTING
             );
 
         } catch (IOException e) {
-            System.out.println("Failed to save tasks.");
+            throw new BlueException("Failed to save tasks: " + e.getMessage());
         }
+    }
+
+    public Task convertToTask(String line) throws BlueException {
+        String[] parts = line.split("\\s*\\|\\s*");
+
+        if (parts.length < 3) {
+            throw new BlueException("Saved data is corrupted: " + line);
+        }
+
+        String type = parts[0];
+        Boolean isDone = parts[1].equals("1");
+        String description = parts[2];
+
+        Task task;
+
+        switch(type) {
+        case "T":
+            task = new ToDo(description);
+            break;
+
+        case "D":
+            if (parts.length < 4) {
+                throw new BlueException("Saved data is corrupted: " + line);
+            }
+            task = new Deadline(description, parts[3]);
+            break;
+
+        case "E":
+            if (parts.length < 5) {
+                throw new BlueException("Saved data is corrupted: " + line);
+            }
+            task = new Event(description, parts[3], parts[4]);
+            break;
+
+        default:
+            throw new BlueException("Unknown task type: " + type);
+        }
+
+        if (isDone) {
+            task.markDone();
+        }
+
+        return task;
     }
 }
