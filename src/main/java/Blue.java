@@ -123,38 +123,38 @@ public class Blue {
     // Handles the commands inputted to the chatbot
     private static void handleInput(Command command, String input) throws BlueException {
         switch (command) {
-            case LIST:
-                printList();
-                break;
-            case MARK:
-                int markIdx = getMarkIdx(input);
-                markTask(markIdx);
-                break;
-            case UNMARK:
-                int unmarkIdx = getMarkIdx(input);
-                unmarkTask(unmarkIdx);
-                break;
-            case TODO:
-                if (input.isEmpty()) {
-                    throw new BlueException("The description can't be empty! =/");
-                }
-                addToDo(input);
-                break;
-            case DEADLINE:
-                String[] deadlineInfo = getDeadlineInfo(input);
-                addDeadline(deadlineInfo[0], deadlineInfo[1]);
-                break;
-            case EVENT:
-                String[] eventInfo = getEventInfo(input);
-                addEvent(eventInfo[0], eventInfo[1], eventInfo[2]);
-                break;
-            case DELETE:
-                int deleteIdx = getMarkIdx(input);
-                deleteTask(deleteIdx);
-                break;
-            case UNKNOWN:
-                printErrorMsg();
-                break;
+        case LIST:
+            printList();
+            break;
+        case MARK:
+            int markIdx = getMarkIdx(input);
+            markTask(markIdx);
+            break;
+        case UNMARK:
+            int unmarkIdx = getMarkIdx(input);
+            unmarkTask(unmarkIdx);
+            break;
+        case TODO:
+            if (input.isEmpty()) {
+                throw new BlueException("The description can't be empty! =/");
+            }
+            addToDo(input);
+            break;
+        case DEADLINE:
+            String[] deadlineInfo = getDeadlineInfo(input);
+            addDeadline(deadlineInfo[0], deadlineInfo[1]);
+            break;
+        case EVENT:
+            String[] eventInfo = getEventInfo(input);
+            addEvent(eventInfo[0], eventInfo[1], eventInfo[2]);
+            break;
+        case DELETE:
+            int deleteIdx = getMarkIdx(input);
+            deleteTask(deleteIdx);
+            break;
+        case UNKNOWN:
+            printErrorMsg();
+            break;
         }
     }
 
@@ -228,6 +228,14 @@ public class Blue {
 
     public static void main(String[] args) {
         greet();
+        Storage storage = new Storage("Blue.txt");
+
+        try {
+            Blue.taskList = storage.load();
+        } catch (BlueException e) {
+            String errorMessage = e.getMessage();
+            wrapTextWithLines(errorMessage);
+        }
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -240,6 +248,12 @@ public class Blue {
             // check if an exit command was given to quit the bot
             if (command.isExitCommand()) {
                 bye();
+                try {
+                    storage.save(Blue.taskList);
+                } catch (BlueException e) {
+                    String errorMessage = e.getMessage();
+                    wrapTextWithLines(errorMessage);
+                }
                 break;
             }
             try {
