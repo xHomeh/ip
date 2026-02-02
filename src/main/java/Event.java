@@ -1,20 +1,26 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Event extends Task {
-    private final String from;
-    private final String to;
+    private final LocalDate from;
+    private final LocalDate to;
+
+    private static final DateTimeFormatter FORMAT_STORAGE = DateTimeFormatter.ofPattern("yyyy M d");
+    private static final DateTimeFormatter FORMAT_DISPLAY = DateTimeFormatter.ofPattern("dd MMM yyyy");
 
     public Event(String description, String from, String to) {
         super(description);
-        this.from = from;
-        this.to = to;
+        this.from = LocalDate.parse(from, FORMAT_STORAGE);
+        this.to = LocalDate.parse(to, FORMAT_STORAGE);
     }
 
     @Override
     public String toStorageString() {
-        return "E | " + super.toStorageString() + " | " + this.from + " | " + this.to;
+        return "E | " + super.toStorageString() + " | " + from.format(FORMAT_STORAGE) + " | " + to.format(FORMAT_STORAGE);
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + String.format(" (from: %s to: %s)", this.from, this.to);
+        return "[E]" + super.toString() + String.format(" (from: %s to: %s)", from.format(FORMAT_DISPLAY), to.format(FORMAT_DISPLAY));
     }
 }
