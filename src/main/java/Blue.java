@@ -178,11 +178,17 @@ public class Blue {
     // helper function to handle input for DEADLINE case, returns a String array of length 2
     private static String[] getDeadlineInfo(String input) throws BlueException {
         String[] result = new String[2];
+        BlueException emptyException = new BlueException("The description can't be empty! =/");
+
         if (input.isEmpty()) {
-            throw new BlueException("The description can't be empty! =/");
+            throw emptyException;
         }
         String[] by = input.split("/by", 2);
         result[0] = by[0].trim();
+
+        if (result[0].isEmpty()) {
+            throw emptyException;
+        }
 
         BlueException deadlineException = new BlueException("Deadlines must have a deadline... (ꐦ¬_¬)");
 
@@ -199,11 +205,17 @@ public class Blue {
     // helper function to handle input for EVENT case, returns a String array of length 3
     private static String[] getEventInfo(String input) throws BlueException {
         String[] result = new String[3];
+        BlueException emptyException = new BlueException("The description can't be empty! =/");
+
         if (input.isEmpty()) {
-            throw new BlueException("The description can't be empty! =/");
+            throw emptyException;
         }
         String[] fromSplitArr = input.split("/from", 2);
         result[0] = fromSplitArr[0].trim();
+
+        if (result[0].isEmpty()) {
+            throw emptyException;
+        }
 
         BlueException eventException = new BlueException("Events must have start and end times!!! <(˶`ロ´˶)> ");
 
