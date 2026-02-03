@@ -1,3 +1,8 @@
+package Blue.parser;
+
+import Blue.exceptions.BlueException;
+import Blue.command.*;
+
 public class Parser {
     public static Command parseInput(String input) throws BlueException {
         String[] parts = input.split("\\s+", 2);

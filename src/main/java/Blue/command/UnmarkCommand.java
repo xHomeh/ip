@@ -1,17 +1,25 @@
-public class DeleteCommand extends Command {
+package Blue.command;
+
+import Blue.exceptions.BlueException;
+import Blue.storage.Storage;
+import Blue.task.Task;
+import Blue.task.TaskList;
+import Blue.ui.Ui;
+
+public class UnmarkCommand extends Command {
     private final int idx;
 
-    public DeleteCommand(String args) throws BlueException {
-        int idx;
+    public UnmarkCommand(String args) throws BlueException {
+        int unmarkIdx;
         try {
-            idx = Integer.parseInt(args);
+            unmarkIdx = Integer.parseInt(args);
         } catch (NumberFormatException e) {
             throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
         }
-        if (idx <= 0) {
+        if (unmarkIdx <= 0) {
             throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
         }
-        this.idx = idx;
+        this.idx = unmarkIdx;
     }
 
     @Override
@@ -20,8 +28,9 @@ public class DeleteCommand extends Command {
             throw new BlueException("There isn't a task " + idx + "!  (•̀⤙•́ )");
         }
         Task task = taskList.get(idx - 1);
-        taskList.remove(idx - 1);
-        ui.deleteTaskMessage(task);
+        task.unmarkDone();
+
+        ui.taskUnmarkMessage(task);
 
         storage.save(taskList);
     }

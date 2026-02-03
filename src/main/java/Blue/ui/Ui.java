@@ -1,3 +1,7 @@
+package Blue.ui;
+
+import Blue.task.Task;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 

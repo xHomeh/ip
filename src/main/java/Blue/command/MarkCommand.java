@@ -1,17 +1,25 @@
-public class UnmarkCommand extends Command {
+package Blue.command;
+
+import Blue.exceptions.BlueException;
+import Blue.storage.Storage;
+import Blue.task.Task;
+import Blue.task.TaskList;
+import Blue.ui.Ui;
+
+public class MarkCommand extends Command {
     private final int idx;
 
-    public UnmarkCommand(String args) throws BlueException {
-        int unmarkIdx;
+    public MarkCommand(String args) throws BlueException {
+        int markIdx;
         try {
-            unmarkIdx = Integer.parseInt(args);
+            markIdx = Integer.parseInt(args);
         } catch (NumberFormatException e) {
             throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
         }
-        if (unmarkIdx <= 0) {
+        if (markIdx <= 0) {
             throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
         }
-        this.idx = unmarkIdx;
+        this.idx = markIdx;
     }
 
     @Override
@@ -20,9 +28,9 @@ public class UnmarkCommand extends Command {
             throw new BlueException("There isn't a task " + idx + "!  (•̀⤙•́ )");
         }
         Task task = taskList.get(idx - 1);
-        task.unmarkDone();
+        task.markDone();
 
-        ui.taskUnmarkMessage(task);
+        ui.taskMarkMessage(task);
 
         storage.save(taskList);
     }
