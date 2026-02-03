@@ -1,5 +1,7 @@
 package Blue.task;
 
+import Blue.exceptions.BlueException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -10,10 +12,14 @@ public class Event extends Task {
     private static final DateTimeFormatter FORMAT_STORAGE = DateTimeFormatter.ofPattern("yyyy M d");
     private static final DateTimeFormatter FORMAT_DISPLAY = DateTimeFormatter.ofPattern("dd MMM yyyy");
 
-    public Event(String description, String from, String to) {
+    public Event(String description, String from, String to) throws BlueException {
         super(description);
         this.from = LocalDate.parse(from, FORMAT_STORAGE);
         this.to = LocalDate.parse(to, FORMAT_STORAGE);
+
+        if (this.from.isAfter(this.to)) {
+            throw new BlueException("Events must end after they start!!!");
+        }
     }
 
     @Override

@@ -44,7 +44,7 @@ public class AddEventCommand extends Command {
         if (toSplitArr.length < 2) {
             throw eventException;
         }
-        eventInfo[2] = toSplitArr[2].trim();
+        eventInfo[2] = toSplitArr[1].trim();
         if (eventInfo[2].isEmpty()) {
             throw eventException;
         }
