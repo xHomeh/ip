@@ -1,11 +1,4 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import java.time.format.DateTimeParseException;
-
 public class Blue {
-    private static ArrayList<Task> taskL_Old = new ArrayList<>();
-    private static final String line = "__________________________________________________ \n";
     private Ui ui;
     private Storage storage;
     private TaskList taskList;
