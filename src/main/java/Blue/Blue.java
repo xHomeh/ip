@@ -1,3 +1,5 @@
+package Blue;
+
 public class Blue {
     private Ui ui;
     private Storage storage;
@@ -32,6 +34,6 @@ public class Blue {
     }
 
     public static void main(String[] args) {
-        new Blue("Blue.txt").run();
+        new Blue("Blue.Blue.txt").run();
     }
 }

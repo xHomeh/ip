@@ -1,17 +1,19 @@
-public class MarkCommand extends Command {
+package Blue;
+
+public class DeleteCommand extends Command {
     private final int idx;
 
-    public MarkCommand(String args) throws BlueException {
-        int markIdx;
+    public DeleteCommand(String args) throws BlueException {
+        int idx;
         try {
-            markIdx = Integer.parseInt(args);
+            idx = Integer.parseInt(args);
         } catch (NumberFormatException e) {
             throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
         }
-        if (markIdx <= 0) {
+        if (idx <= 0) {
             throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
         }
-        this.idx = markIdx;
+        this.idx = idx;
     }
 
     @Override
@@ -20,9 +22,8 @@ public class MarkCommand extends Command {
             throw new BlueException("There isn't a task " + idx + "!  (•̀⤙•́ )");
         }
         Task task = taskList.get(idx - 1);
-        task.markDone();
-
-        ui.taskMarkMessage(task);
+        taskList.remove(idx - 1);
+        ui.deleteTaskMessage(task);
 
         storage.save(taskList);
     }

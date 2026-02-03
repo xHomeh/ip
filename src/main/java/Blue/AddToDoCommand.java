@@ -1,3 +1,5 @@
+package Blue;
+
 public class AddToDoCommand extends Command {
     String description;
     public AddToDoCommand(String args) throws BlueException {

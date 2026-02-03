@@ -1,3 +1,5 @@
+package Blue;
+
 import java.time.format.DateTimeParseException;
 
 public class AddEventCommand extends Command {
