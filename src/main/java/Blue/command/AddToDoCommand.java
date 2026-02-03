@@ -1,4 +1,11 @@
-package Blue;
+package Blue.command;
+
+import Blue.exceptions.BlueException;
+import Blue.storage.Storage;
+import Blue.task.Task;
+import Blue.task.TaskList;
+import Blue.task.ToDo;
+import Blue.ui.Ui;
 
 public class AddToDoCommand extends Command {
     String description;

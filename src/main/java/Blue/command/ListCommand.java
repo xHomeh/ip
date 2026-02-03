@@ -1,4 +1,9 @@
-package Blue;
+package Blue.command;
+
+import Blue.exceptions.BlueException;
+import Blue.storage.Storage;
+import Blue.task.TaskList;
+import Blue.ui.Ui;
 
 public class ListCommand extends Command {
     @Override

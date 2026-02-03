@@ -1,4 +1,11 @@
-package Blue;
+package Blue.command;
+
+import Blue.exceptions.BlueException;
+import Blue.storage.Storage;
+import Blue.task.Event;
+import Blue.task.Task;
+import Blue.task.TaskList;
+import Blue.ui.Ui;
 
 import java.time.format.DateTimeParseException;
 

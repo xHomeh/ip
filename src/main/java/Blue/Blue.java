@@ -1,5 +1,12 @@
 package Blue;
 
+import Blue.command.Command;
+import Blue.exceptions.BlueException;
+import Blue.parser.Parser;
+import Blue.storage.Storage;
+import Blue.task.TaskList;
+import Blue.ui.Ui;
+
 public class Blue {
     private Ui ui;
     private Storage storage;

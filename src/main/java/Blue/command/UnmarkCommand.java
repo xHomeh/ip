@@ -1,4 +1,10 @@
-package Blue;
+package Blue.command;
+
+import Blue.exceptions.BlueException;
+import Blue.storage.Storage;
+import Blue.task.Task;
+import Blue.task.TaskList;
+import Blue.ui.Ui;
 
 public class UnmarkCommand extends Command {
     private final int idx;
