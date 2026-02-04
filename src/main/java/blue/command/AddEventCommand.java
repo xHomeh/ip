@@ -11,6 +11,14 @@ import java.time.format.DateTimeParseException;
 
 public class AddEventCommand extends Command {
     String args;
+
+    /**
+     * Constructs an AddEventCommand with raw input arguments.
+     * </p>
+     *
+     * @param args Input string in format "description /from startDate /to endDate".
+     * @throws BlueException if input is completely empty.
+     */
     public AddEventCommand(String args) throws BlueException {
         if (args.isEmpty()) {
             throw new BlueException("The description can't be empty! =/");
@@ -18,6 +26,21 @@ public class AddEventCommand extends Command {
         this.args = args;
     }
 
+    /**
+     * Parses event input and adds Event task.
+     * <p>
+     * Expected format: "description /from yyyy M d /to yyyy M d". Splits sequentially
+     * on "/from" then "/to", validates all three components (description, start, end)
+     * are non-empty, creates Event (which validates chronological order),
+     * adds to list, shows success message, and saves to storage.
+     * </p>
+     *
+     * @param taskList Current list of tasks to modify.
+     * @param ui       User interface for displaying success message.
+     * @param storage  Storage handler for persisting changes.
+     * @throws BlueException if missing description, "/from" clause, "/to" clause,
+     *                       empty dates, invalid date format, or end date before start date.
+     */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
         BlueException emptyException = new BlueException("The description can't be empty! =/");
