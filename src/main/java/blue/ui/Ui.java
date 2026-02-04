@@ -16,9 +16,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
-    private static final String line = "__________________________________________________ \n";
+    private static final String LINE = "__________________________________________________";
 
     private final Scanner scanner = new Scanner(System.in);
+
+    /**
+     * Prints the divider line.
+     */
+    public void showLine() {
+        System.out.println(LINE);
+    }
 
     /**
      * Displays the startup greeting with Blue's ASCII art logo
@@ -35,21 +42,21 @@ public class Ui {
                 """;
         System.out.print(logo);
 
-        String greeting = line
-                + "Hi☆・*。It's me, Blue! \n"
-                + "What do you need help with? \n"
-                + line;
-        System.out.println(greeting);
+        String greeting = "Hi☆・*。It's me, Blue! \n"
+                + "What do you need help with?";
+
+        wrapTextWithLines(greeting);
     }
 
     /**
      * Displays the farewell message when exiting the application.
      */
     public void bye() {
-        String goodbye = line
-                + "Byeee (^_^)/~ See you soon! \n"
-                + line;
-        System.out.print(goodbye);
+        String goodbye = "Byeee (^_^)/~ See you soon!";
+
+        showLine();
+        System.out.println(goodbye);
+        showLine();
     }
 
     /**
@@ -75,10 +82,10 @@ public class Ui {
      * @param str The message to display with line wrapping.
      */
     public void wrapTextWithLines(String str) {
-        String wrappedText = line
-                + str + "\n"
-                + line;
-        System.out.println(wrappedText);
+        showLine();
+        System.out.println(str);
+        showLine();
+        System.out.println();
     }
 
     /**
@@ -93,14 +100,15 @@ public class Ui {
             return;
         }
 
-        System.out.print(line);
+        showLine();
 
         for (int i = 0; i < size; i++) {
             String message = (i+1) + ". " + tasks.get(i).toString();
             System.out.println(message);
         }
 
-        System.out.println(line);
+        showLine();
+        System.out.println();
     }
 
     /**

@@ -24,7 +24,7 @@ public class ExitCommand extends Command {
      * @return true to indicate application should exit.
      */
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return true;
     }
 }

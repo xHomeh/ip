@@ -8,7 +8,7 @@ import blue.task.ToDo;
 import blue.ui.Ui;
 
 public class AddToDoCommand extends Command {
-    String description;
+    private final String description;
 
     /**
      * Constructs an AddToDoCommand with the task description.

@@ -32,7 +32,7 @@ public class Storage {
      * @param fileName The name of the file to store tasks (e.g., "Blue.txt").
      */
     public Storage(String fileName) {
-        this.filePath = Paths.get("data", fileName);
+        filePath = Paths.get("data", fileName);
     }
 
     /**

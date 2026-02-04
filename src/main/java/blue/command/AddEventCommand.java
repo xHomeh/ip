@@ -10,7 +10,7 @@ import blue.ui.Ui;
 import java.time.format.DateTimeParseException;
 
 public class AddEventCommand extends Command {
-    String args;
+    private final String args;
 
     /**
      * Constructs an AddEventCommand with raw input arguments.

@@ -10,7 +10,7 @@ import blue.ui.Ui;
 import java.time.format.DateTimeParseException;
 
 public class AddDeadlineCommand extends Command {
-    String args;
+    private final String args;
 
     /**
      * Constructs an AddDeadlineCommand with raw input arguments.

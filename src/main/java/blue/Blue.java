@@ -61,7 +61,7 @@ public class Blue {
                 String input = ui.readCommand();
                 Command c = Parser.parseInput(input);
                 c.execute(taskList, ui, storage);
-                isExit = c.isExit();
+                isExit = c.shouldExit();
             } catch (BlueException e) {
                 ui.wrapTextWithLines(e.getMessage());
             }
