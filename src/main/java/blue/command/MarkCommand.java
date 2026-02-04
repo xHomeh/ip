@@ -9,6 +9,12 @@ import blue.ui.Ui;
 public class MarkCommand extends Command {
     private final int idx;
 
+    /**
+     * Constructs a MarkCommand with the specified task index.
+     *
+     * @param args Single integer representing 1-based task index.
+     * @throws BlueException if argument is not a positive integer.
+     */
     public MarkCommand(String args) throws BlueException {
         int markIdx;
         try {
@@ -22,6 +28,14 @@ public class MarkCommand extends Command {
         this.idx = markIdx;
     }
 
+    /**
+     * Marks the specified task as done and saves changes.
+     *
+     * @param taskList Current list of tasks to modify.
+     * @param ui       User interface for displaying success message.
+     * @param storage  Storage handler for persisting changes.
+     * @throws BlueException if task index exceeds list bounds.
+     */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
         if (idx > taskList.size()) {

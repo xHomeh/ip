@@ -11,6 +11,13 @@ import java.time.format.DateTimeParseException;
 
 public class AddDeadlineCommand extends Command {
     String args;
+
+    /**
+     * Constructs an AddDeadlineCommand with raw input arguments.
+     *
+     * @param args Input string in format "description /by dueDate".
+     * @throws BlueException if input is completely empty.
+     */
     public AddDeadlineCommand(String args) throws BlueException {
         if (args.isEmpty()) {
             throw new BlueException("The description can't be empty! =/");
@@ -18,6 +25,20 @@ public class AddDeadlineCommand extends Command {
         this.args = args;
     }
 
+    /**
+     * Parses deadline input and adds Deadline task.
+     * <p>
+     * Expected format: "description /by yyyy M d". Splits on "/by", validates
+     * both description and due date are non-empty, creates Deadline,
+     * adds to list, shows success message, and saves to storage.
+     * </p>
+     *
+     * @param taskList Current list of tasks to modify.
+     * @param ui       User interface for displaying success message.
+     * @param storage  Storage handler for persisting changes.
+     * @throws BlueException if missing description, missing "/by" clause, empty due date,
+     *                       or invalid date format.
+     */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
         BlueException emptyException = new BlueException("The description can't be empty! =/");

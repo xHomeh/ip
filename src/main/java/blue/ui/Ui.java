@@ -1,3 +1,13 @@
+/**
+ * Handles all user interface interactions for the Blue task management chatbot.
+ * <p>
+ * This class provides methods to display greeting and farewell messages, print task lists,
+ * show task operation feedback, handle errors, and read user input from the console.
+ * All output is formatted with decorative divider lines for visual consistency.
+ * </p>
+ *
+ * @author xHomeh / Joel Wong
+ */
 package blue.ui;
 
 import blue.task.Task;
@@ -10,7 +20,10 @@ public class Ui {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    // Prints the greeting message when the chatbot starts running
+    /**
+     * Displays the startup greeting with Blue's ASCII art logo
+     * followed by asking what the user needs help with.
+     */
     public void greet() {
         String logo = """
                  ____  _           \s
@@ -29,7 +42,9 @@ public class Ui {
         System.out.println(greeting);
     }
 
-    // Prints the goodbye message when the chatbot is quit
+    /**
+     * Displays the farewell message when exiting the application.
+     */
     public void bye() {
         String goodbye = line
                 + "Byeee (^_^)/~ See you soon! \n"
@@ -37,15 +52,28 @@ public class Ui {
         System.out.print(goodbye);
     }
 
+    /**
+     * Prints the command prompt indicator to indicate user
+     * can enter a command.
+     */
     public void commandLine() {
         System.out.print("> ");
     }
 
+    /**
+     * Reads a command from the user via console input.
+     *
+     * @return The user's input command as a trimmed string.
+     */
     public String readCommand() {
         return scanner.nextLine().trim();
     }
 
-    // Wrap string with lines on the top and bottom
+    /**
+     * Wraps the given text with decorative divider lines above and below.
+     *
+     * @param str The message to display with line wrapping.
+     */
     public void wrapTextWithLines(String str) {
         String wrappedText = line
                 + str + "\n"
@@ -53,6 +81,11 @@ public class Ui {
         System.out.println(wrappedText);
     }
 
+    /**
+     * Prints a numbered list of tasks or an empty list message.
+     *
+     * @param tasks The list of tasks to display.
+     */
     public void printList(ArrayList<Task> tasks) {
         int size = tasks.size();
         if (size == 0) {
@@ -70,6 +103,12 @@ public class Ui {
         System.out.println(line);
     }
 
+    /**
+     * Shows confirmation message when a task is added to the list.
+     *
+     * @param task  The task that was added.
+     * @param size  The total number of tasks after adding.
+     */
     public void addTaskMessage(Task task, int size) {
         String message = "Okay! I'll add this task now! \n"
                 + task + "\n"
@@ -77,24 +116,42 @@ public class Ui {
         wrapTextWithLines(message);
     }
 
+    /**
+     * Shows confirmation when a task is marked as done.
+     *
+     * @param task The task that was marked as completed.
+     */
     public void taskMarkMessage(Task task) {
         String message = "YAY this task is now done!! ^o^ \n"
                 + task;
         wrapTextWithLines(message);
     }
 
+    /**
+     * Shows confirmation when a task is unmarked (set back to not done).
+     *
+     * @param task The task that was unmarked.
+     */
     public void taskUnmarkMessage(Task task) {
         String message = "Okay, I deleted that for you! \n"
                 + task;
         wrapTextWithLines(message);
     }
 
+    /**
+     * Shows confirmation when a task is deleted from the list.
+     *
+     * @param task The task that was deleted.
+     */
     public void deleteTaskMessage(Task task) {
         String message = "Okay, I deleted that for you! \n"
                 + task;
         wrapTextWithLines(message);
     }
 
+    /**
+     * Displays an error message when task loading from storage fails.
+     */
     public void showTaskLoadingError() {
         wrapTextWithLines("Couldn't load tasks (╥﹏╥) Initialising with empty task list!");
     }
