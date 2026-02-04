@@ -10,7 +10,7 @@ import blue.ui.Ui;
 import java.time.format.DateTimeParseException;
 
 public class AddEventCommand extends Command {
-    String args;
+    private final String args;
     public AddEventCommand(String args) throws BlueException {
         if (args.isEmpty()) {
             throw new BlueException("The description can't be empty! =/");

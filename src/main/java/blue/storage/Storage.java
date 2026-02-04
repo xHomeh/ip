@@ -17,7 +17,7 @@ public class Storage {
     private final Path filePath;
 
     public Storage(String fileName) {
-        this.filePath = Paths.get("data", fileName);
+        filePath = Paths.get("data", fileName);
     }
 
     public ArrayList<Task> load() throws BlueException {

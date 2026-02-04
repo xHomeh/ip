@@ -6,9 +6,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
-    private static final String line = "__________________________________________________ \n";
+    private static final String LINE = "__________________________________________________";
 
     private final Scanner scanner = new Scanner(System.in);
+
+    /**
+     * Prints the divider line.
+     */
+    public void showLine() {
+        System.out.println(LINE);
+    }
 
     // Prints the greeting message when the chatbot starts running
     public void greet() {
@@ -22,19 +29,21 @@ public class Ui {
                 """;
         System.out.print(logo);
 
-        String greeting = line
-                + "Hi☆・*。It's me, Blue! \n"
-                + "What do you need help with? \n"
-                + line;
+        String greeting = "Hi☆・*。It's me, Blue! \n"
+                + "What do you need help with?";
+
+        showLine();
         System.out.println(greeting);
+        showLine();
     }
 
     // Prints the goodbye message when the chatbot is quit
     public void bye() {
-        String goodbye = line
-                + "Byeee (^_^)/~ See you soon! \n"
-                + line;
-        System.out.print(goodbye);
+        String goodbye = "Byeee (^_^)/~ See you soon!";
+
+        showLine();
+        System.out.println(goodbye);
+        showLine();
     }
 
     public void commandLine() {
@@ -47,10 +56,10 @@ public class Ui {
 
     // Wrap string with lines on the top and bottom
     public void wrapTextWithLines(String str) {
-        String wrappedText = line
-                + str + "\n"
-                + line;
-        System.out.println(wrappedText);
+        showLine();
+        System.out.println(str);
+        showLine();
+        System.out.println();
     }
 
     public void printList(ArrayList<Task> tasks) {
@@ -60,14 +69,15 @@ public class Ui {
             return;
         }
 
-        System.out.print(line);
+        showLine();
 
         for (int i = 0; i < size; i++) {
             String message = (i+1) + ". " + tasks.get(i).toString();
             System.out.println(message);
         }
 
-        System.out.println(line);
+        showLine();
+        System.out.println();
     }
 
     public void addTaskMessage(Task task, int size) {

@@ -8,7 +8,7 @@ import blue.task.ToDo;
 import blue.ui.Ui;
 
 public class AddToDoCommand extends Command {
-    String description;
+    private final String description;
     public AddToDoCommand(String args) throws BlueException {
         if (args.isEmpty()) {
             throw new BlueException("The description can't be empty! =/");
