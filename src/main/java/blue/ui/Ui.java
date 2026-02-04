@@ -32,9 +32,7 @@ public class Ui {
         String greeting = "Hi☆・*。It's me, Blue! \n"
                 + "What do you need help with?";
 
-        showLine();
-        System.out.println(greeting);
-        showLine();
+        wrapTextWithLines(greeting);
     }
 
     // Prints the goodbye message when the chatbot is quit
