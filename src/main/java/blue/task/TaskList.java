@@ -1,4 +1,4 @@
-package Blue.task;
+package blue.task;
 
 import java.util.ArrayList;
 

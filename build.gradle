@@ -28,7 +28,7 @@ test {
 }
 
 application {
-    mainClass.set("Blue.Blue")
+    mainClass.set("blue.Blue")
 }
 
 shadowJar {

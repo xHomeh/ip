@@ -1,6 +1,6 @@
-package Blue.task;
+package blue.task;
 
-import Blue.exceptions.BlueException;
+import blue.exceptions.BlueException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

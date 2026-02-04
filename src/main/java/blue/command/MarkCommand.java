@@ -1,10 +1,10 @@
-package Blue.command;
+package blue.command;
 
-import Blue.exceptions.BlueException;
-import Blue.storage.Storage;
-import Blue.task.Task;
-import Blue.task.TaskList;
-import Blue.ui.Ui;
+import blue.exceptions.BlueException;
+import blue.storage.Storage;
+import blue.task.Task;
+import blue.task.TaskList;
+import blue.ui.Ui;
 
 public class MarkCommand extends Command {
     private final int idx;

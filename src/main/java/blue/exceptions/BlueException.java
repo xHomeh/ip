@@ -1,4 +1,4 @@
-package Blue.exceptions;
+package blue.exceptions;
 
 public class BlueException extends Exception {
     public BlueException(String message) {

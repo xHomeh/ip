@@ -1,7 +1,7 @@
-package Blue.parser;
+package blue.parser;
 
-import Blue.exceptions.BlueException;
-import Blue.command.*;
+import blue.exceptions.BlueException;
+import blue.command.*;
 
 public class Parser {
     public static Command parseInput(String input) throws BlueException {

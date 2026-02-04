@@ -1,4 +1,4 @@
-package Blue.task;
+package blue.task;
 
 public class Task {
     private final String description;

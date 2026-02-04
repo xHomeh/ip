@@ -1,11 +1,11 @@
-package Blue;
+package blue;
 
-import Blue.command.Command;
-import Blue.exceptions.BlueException;
-import Blue.parser.Parser;
-import Blue.storage.Storage;
-import Blue.task.TaskList;
-import Blue.ui.Ui;
+import blue.command.Command;
+import blue.exceptions.BlueException;
+import blue.parser.Parser;
+import blue.storage.Storage;
+import blue.task.TaskList;
+import blue.ui.Ui;
 
 public class Blue {
     private Ui ui;

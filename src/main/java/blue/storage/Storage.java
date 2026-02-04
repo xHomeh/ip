@@ -1,7 +1,7 @@
-package Blue.storage;
+package blue.storage;
 
-import Blue.exceptions.BlueException;
-import Blue.task.*;
+import blue.exceptions.BlueException;
+import blue.task.*;
 
 import java.io.IOException;
 

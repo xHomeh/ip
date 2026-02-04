@@ -1,8 +1,8 @@
-package Blue.command;
+package blue.command;
 
-import Blue.storage.Storage;
-import Blue.task.TaskList;
-import Blue.ui.Ui;
+import blue.storage.Storage;
+import blue.task.TaskList;
+import blue.ui.Ui;
 
 public class ExitCommand extends Command {
     @Override
