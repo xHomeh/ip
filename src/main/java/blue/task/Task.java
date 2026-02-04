@@ -16,6 +16,10 @@ public class Task {
         this.isDone = false;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public String toStorageString() {
         return (isDone ? 1 : 0) + " | " + this.description;
     }

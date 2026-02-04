@@ -18,6 +18,7 @@ public class Parser {
             case "deadline" -> new AddDeadlineCommand(arguments);
             case "event" -> new AddEventCommand(arguments);
             case "delete" -> new DeleteCommand(arguments);
+            case "find" -> new findCommand(arguments);
             default -> throw new BlueException("I don't know what you want me to do about that ㅠ.ㅠ");
         };
     }
