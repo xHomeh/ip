@@ -10,6 +10,7 @@
  */
 package blue.ui;
 
+import blue.exceptions.BlueException;
 import blue.task.Task;
 
 import java.util.ArrayList;
@@ -92,18 +93,17 @@ public class Ui {
      * Prints a numbered list of tasks or an empty list message.
      *
      * @param tasks The list of tasks to display.
+     * @throws BlueException if no tasks found
      */
-    public void printList(ArrayList<Task> tasks) {
-        int size = tasks.size();
-        if (size == 0) {
-            wrapTextWithLines("Wow! There's nothing to do!");
-            return;
+    public void printList(ArrayList<Task> tasks) throws BlueException {
+        if (tasks.isEmpty()) {
+            throw new BlueException("Wow! There's nothing to do!");
         }
 
         showLine();
 
-        for (int i = 0; i < size; i++) {
-            String message = (i+1) + ". " + tasks.get(i).toString();
+        for (int i = 0; i < tasks.size(); i++) {
+            String message = (i + 1) + ". " + tasks.get(i).toString();
             System.out.println(message);
         }
 
@@ -155,6 +155,29 @@ public class Ui {
         String message = "Okay, I deleted that for you! \n"
                 + task;
         wrapTextWithLines(message);
+    }
+
+    /**
+     * Displays a numbered list of found tasks or throws an exception if none found.
+     *
+     * @param tasks List of tasks matching search criteria.
+     * @throws BlueException if no tasks found (empty list).
+     */
+    public void showFoundTasks(ArrayList<Task> tasks) throws BlueException {
+        if (tasks.isEmpty()) {
+            throw new BlueException("Couldn't find any tasks with that keyword :(");
+        }
+
+        showLine();
+        System.out.println("Here are the tasks I found!");
+
+        for (int i = 0; i < tasks.size(); i++) {
+            String message = (i + 1) + ". " + tasks.get(i).toString();
+            System.out.println(message);
+        }
+
+        showLine();
+        System.out.println();
     }
 
     /**

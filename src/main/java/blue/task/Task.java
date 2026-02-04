@@ -31,6 +31,10 @@ public class Task {
         this.isDone = false;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     /**
      * Returns the storage format string for persistence.
      *
