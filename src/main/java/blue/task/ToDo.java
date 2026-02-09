@@ -1,3 +1,5 @@
+package blue.task;
+
 /**
  * Represents a simple ToDo task without any time constraints.
  * <p>
@@ -8,8 +10,6 @@
  *
  * @author xHomeh / Joel Wong
  */
-package blue.task;
-
 public class ToDo extends Task {
 
     /**

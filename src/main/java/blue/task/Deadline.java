@@ -1,3 +1,8 @@
+package blue.task;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Represents a Deadline task with a specific due date.
  * <p>
@@ -8,19 +13,14 @@
  *
  * @author xHomeh / Joel Wong
  */
-package blue.task;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 public class Deadline extends Task {
-    private final LocalDate due;
-
     /** Formatter for compact storage: yyyy M d (e.g., "2026 1 1") */
     private static final DateTimeFormatter FORMAT_STORAGE = DateTimeFormatter.ofPattern("yyyy M d");
 
     /** Formatter for display: dd MMM yyyy (e.g., "1 Jan 2026") */
     private static final DateTimeFormatter FORMAT_DISPLAY = DateTimeFormatter.ofPattern("dd MMM yyyy");
+
+    private final LocalDate due;
 
     /**
      * Constructs a new Deadline task with description and due date.
@@ -40,7 +40,8 @@ public class Deadline extends Task {
      */
     @Override
     public String toStorageString() {
-        return "D | " + super.toStorageString() + " | " + due.format(FORMAT_STORAGE);
+        return "D | " + super.toStorageString() + " | "
+                + due.format(FORMAT_STORAGE);
     }
 
     /**
@@ -50,6 +51,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + String.format(" (by: %s)", due.format(FORMAT_DISPLAY));
+        return "[D]" + super.toString()
+                + String.format(" (by: %s)", due.format(FORMAT_DISPLAY));
     }
 }

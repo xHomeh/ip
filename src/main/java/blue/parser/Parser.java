@@ -1,3 +1,17 @@
+package blue.parser;
+
+import blue.command.AddDeadlineCommand;
+import blue.command.AddEventCommand;
+import blue.command.AddToDoCommand;
+import blue.command.Command;
+import blue.command.DeleteCommand;
+import blue.command.ExitCommand;
+import blue.command.FindCommand;
+import blue.command.ListCommand;
+import blue.command.MarkCommand;
+import blue.command.UnmarkCommand;
+import blue.exceptions.BlueException;
+
 /**
  * Parses user input strings into corresponding Command objects.
  * <p>
@@ -8,11 +22,6 @@
  *
  * @author xHomeh / Joel Wong
  */
-package blue.parser;
-
-import blue.exceptions.BlueException;
-import blue.command.*;
-
 public class Parser {
 
     /**
@@ -28,16 +37,16 @@ public class Parser {
         String arguments = (parts.length > 1) ? parts[1] : "";
 
         return switch (command) {
-            case "exit", "bye", "quit", "q" -> new ExitCommand();
-            case "list" -> new ListCommand();
-            case "mark" -> new MarkCommand(arguments);
-            case "unmark" -> new UnmarkCommand(arguments);
-            case "todo" -> new AddToDoCommand(arguments);
-            case "deadline" -> new AddDeadlineCommand(arguments);
-            case "event" -> new AddEventCommand(arguments);
-            case "delete" -> new DeleteCommand(arguments);
-            case "find" -> new findCommand(arguments);
-            default -> throw new BlueException("I don't know what you want me to do about that ㅠ.ㅠ");
+        case "exit", "bye", "quit", "q" -> new ExitCommand();
+        case "list" -> new ListCommand();
+        case "mark" -> new MarkCommand(arguments);
+        case "unmark" -> new UnmarkCommand(arguments);
+        case "todo" -> new AddToDoCommand(arguments);
+        case "deadline" -> new AddDeadlineCommand(arguments);
+        case "event" -> new AddEventCommand(arguments);
+        case "delete" -> new DeleteCommand(arguments);
+        case "find" -> new FindCommand(arguments);
+        default -> throw new BlueException("I don't know what you want me to do about that ㅠ.ㅠ");
         };
     }
 }

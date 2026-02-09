@@ -7,20 +7,23 @@ import blue.task.TaskList;
 import blue.task.ToDo;
 import blue.ui.Ui;
 
+/**
+ * Represents a command that adds a ToDo task to the task list.
+ */
 public class AddToDoCommand extends Command {
     private final String description;
 
     /**
      * Constructs an AddToDoCommand with the task description.
      *
-     * @param args Task description string.
+     * @param inputArgs Task description string.
      * @throws BlueException if description is empty.
      */
-    public AddToDoCommand(String args) throws BlueException {
-        if (args.isEmpty()) {
+    public AddToDoCommand(String inputArgs) throws BlueException {
+        if (inputArgs.isEmpty()) {
             throw new BlueException("The description can't be empty! =/");
         }
-        this.description = args;
+        this.description = inputArgs;
     }
 
     /**

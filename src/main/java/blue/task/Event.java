@@ -1,3 +1,10 @@
+package blue.task;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import blue.exceptions.BlueException;
+
 /**
  * Represents an Event task with start and end dates.
  * <p>
@@ -8,22 +15,15 @@
  *
  * @author xHomeh / Joel Wong
  */
-package blue.task;
-
-import blue.exceptions.BlueException;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 public class Event extends Task {
-    private final LocalDate from;
-    private final LocalDate to;
-
     /** Formatter for compact storage: yyyy M d (e.g., "2026 1 1") */
     private static final DateTimeFormatter FORMAT_STORAGE = DateTimeFormatter.ofPattern("yyyy M d");
 
     /** Formatter for display: dd MMM yyyy (e.g., "1 Jan 2026") */
     private static final DateTimeFormatter FORMAT_DISPLAY = DateTimeFormatter.ofPattern("dd MMM yyyy");
+
+    private final LocalDate from;
+    private final LocalDate to;
 
     /**
      * Constructs a new Event task with description and date range.
@@ -50,7 +50,9 @@ public class Event extends Task {
      */
     @Override
     public String toStorageString() {
-        return "E | " + super.toStorageString() + " | " + from.format(FORMAT_STORAGE) + " | " + to.format(FORMAT_STORAGE);
+        return "E | " + super.toStorageString() + " | "
+                + from.format(FORMAT_STORAGE) + " | "
+                + to.format(FORMAT_STORAGE);
     }
 
     /**
@@ -60,6 +62,9 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + String.format(" (from: %s to: %s)", from.format(FORMAT_DISPLAY), to.format(FORMAT_DISPLAY));
+        return "[E]" + super.toString()
+                + String.format(" (from: %s to: %s)",
+                from.format(FORMAT_DISPLAY),
+                to.format(FORMAT_DISPLAY));
     }
 }

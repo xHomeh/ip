@@ -1,3 +1,20 @@
+package blue.storage;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
+
+import blue.exceptions.BlueException;
+import blue.task.Deadline;
+import blue.task.Event;
+import blue.task.Task;
+import blue.task.TaskList;
+import blue.task.ToDo;
+
 /**
  * Manages persistent storage of tasks to and from file system.
  * <p>
@@ -8,21 +25,6 @@
  *
  * @author xHomeh / Joel Wong
  */
-package blue.storage;
-
-import blue.exceptions.BlueException;
-import blue.task.*;
-
-import java.io.IOException;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import java.nio.file.StandardOpenOption;
-import java.util.List;
-import java.util.ArrayList;
-
 public class Storage {
     private final Path filePath;
 
@@ -104,7 +106,7 @@ public class Storage {
      * @return Reconstructed Task object.
      * @throws BlueException if line format is corrupted or contains unknown task type.
      */
-    public Task convertToTask(String line) throws BlueException {
+    private Task convertToTask(String line) throws BlueException {
         String[] parts = line.split("\\s*\\|\\s*");
 
         if (parts.length < 3) {

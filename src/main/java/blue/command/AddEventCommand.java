@@ -1,5 +1,7 @@
 package blue.command;
 
+import java.time.format.DateTimeParseException;
+
 import blue.exceptions.BlueException;
 import blue.storage.Storage;
 import blue.task.Event;
@@ -7,23 +9,24 @@ import blue.task.Task;
 import blue.task.TaskList;
 import blue.ui.Ui;
 
-import java.time.format.DateTimeParseException;
-
+/**
+ * Represents a command that adds an Event task to the task list.
+ */
 public class AddEventCommand extends Command {
-    private final String args;
+    private final String inputArgs;
 
     /**
      * Constructs an AddEventCommand with raw input arguments.
      * </p>
      *
-     * @param args Input string in format "description /from startDate /to endDate".
+     * @param inputArgs Input string in format "description /from startDate /to endDate".
      * @throws BlueException if input is completely empty.
      */
-    public AddEventCommand(String args) throws BlueException {
-        if (args.isEmpty()) {
+    public AddEventCommand(String inputArgs) throws BlueException {
+        if (inputArgs.isEmpty()) {
             throw new BlueException("The description can't be empty! =/");
         }
-        this.args = args;
+        this.inputArgs = inputArgs;
     }
 
     /**
@@ -46,7 +49,7 @@ public class AddEventCommand extends Command {
         BlueException emptyException = new BlueException("The description can't be empty! =/");
 
         String[] eventInfo = new String[3];
-        String[] fromSplitArr = args.split("/from", 2);
+        String[] fromSplitArr = inputArgs.split("/from", 2);
         eventInfo[0] = fromSplitArr[0].trim();
 
         if (eventInfo[0].isEmpty()) {

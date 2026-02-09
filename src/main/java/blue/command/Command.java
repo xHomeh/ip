@@ -1,3 +1,10 @@
+package blue.command;
+
+import blue.exceptions.BlueException;
+import blue.storage.Storage;
+import blue.task.TaskList;
+import blue.ui.Ui;
+
 /**
  * Base class for all command implementations in the Blue task management system.
  * <p>
@@ -8,13 +15,6 @@
  *
  * @author xHomeh / Joel Wong
  */
-package blue.command;
-
-import blue.exceptions.BlueException;
-import blue.storage.Storage;
-import blue.task.TaskList;
-import blue.ui.Ui;
-
 public abstract class Command {
 
     /**

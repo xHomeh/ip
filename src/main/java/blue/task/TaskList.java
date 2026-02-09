@@ -1,3 +1,7 @@
+package blue.task;
+
+import java.util.ArrayList;
+
 /**
  * Manages a collection of Task objects for the Blue task management system.
  * <p>
@@ -8,12 +12,8 @@
  *
  * @author xHomeh / Joel Wong
  */
-package blue.task;
-
-import java.util.ArrayList;
-
 public class TaskList {
-    private ArrayList<Task> tasks = new ArrayList<>();
+    private ArrayList<Task> tasks;
 
     /**
      * Creates an empty task list.

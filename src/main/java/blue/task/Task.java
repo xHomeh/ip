@@ -1,3 +1,5 @@
+package blue.task;
+
 /**
  * Base class for all task types in the Blue task management system.
  * <p>
@@ -8,8 +10,6 @@
  *
  * @author xHomeh / Joel Wong
  */
-package blue.task;
-
 public class Task {
     private final String description;
     private boolean isDone = false;
@@ -23,10 +23,16 @@ public class Task {
         this.description = description;
     }
 
+    /**
+     * Marks the task as done by setting isDone to true
+     */
     public void markDone() {
         this.isDone = true;
     }
 
+    /**
+     * Unmarks the task as done by setting isDone to false
+     */
     public void unmarkDone() {
         this.isDone = false;
     }

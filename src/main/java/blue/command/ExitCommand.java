@@ -4,6 +4,9 @@ import blue.storage.Storage;
 import blue.task.TaskList;
 import blue.ui.Ui;
 
+/**
+ * Represents a command that exits the chatbot.
+ */
 public class ExitCommand extends Command {
 
     /**
