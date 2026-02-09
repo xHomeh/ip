@@ -8,20 +8,20 @@ import blue.ui.Ui;
 
 import java.util.ArrayList;
 
-public class findCommand extends Command {
-    private final String args;
+public class FindCommand extends Command {
+    private final String inputArgs;
 
     /**
      * Constructs a FindCommand with the search keyword.
      *
-     * @param args Search keyword to find in task descriptions.
+     * @param inputArgs Search keyword to find in task descriptions.
      * @throws BlueException if keyword is empty or whitespace-only.
      */
-    public findCommand(String args) throws BlueException {
-        if (args.trim().isEmpty()) {
+    public FindCommand(String inputArgs) throws BlueException {
+        if (inputArgs.trim().isEmpty()) {
             throw new BlueException("I don't know what you want me to find :(");
         }
-        this.args = args.trim();
+        this.inputArgs = inputArgs.trim();
     }
 
     /**
@@ -34,7 +34,7 @@ public class findCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
-        ArrayList<Task> foundTasks = taskList.findTasks(args);
+        ArrayList<Task> foundTasks = taskList.findTasks(inputArgs);
         ui.showFoundTasks(foundTasks);
     }
 }

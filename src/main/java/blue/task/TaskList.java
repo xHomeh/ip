@@ -13,7 +13,7 @@ package blue.task;
 import java.util.ArrayList;
 
 public class TaskList {
-    private ArrayList<Task> tasks = new ArrayList<>();
+    private ArrayList<Task> tasks;
 
     /**
      * Creates an empty task list.

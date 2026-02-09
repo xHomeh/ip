@@ -40,7 +40,8 @@ public class Deadline extends Task {
      */
     @Override
     public String toStorageString() {
-        return "D | " + super.toStorageString() + " | " + due.format(FORMAT_STORAGE);
+        return "D | " + super.toStorageString() + " | "
+                + due.format(FORMAT_STORAGE);
     }
 
     /**
@@ -50,6 +51,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + String.format(" (by: %s)", due.format(FORMAT_DISPLAY));
+        return "[D]" + super.toString()
+                + String.format(" (by: %s)", due.format(FORMAT_DISPLAY));
     }
 }

@@ -64,7 +64,7 @@ public class Ui {
      * Prints the command prompt indicator to indicate user
      * can enter a command.
      */
-    public void commandLine() {
+    public void printCommandPrompt() {
         System.out.print("> ");
     }
 

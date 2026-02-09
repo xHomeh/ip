@@ -57,7 +57,7 @@ public class Blue {
         boolean isExit = false;
         while (!isExit) {
             try {
-                ui.commandLine();
+                ui.printCommandPrompt();
                 String input = ui.readCommand();
                 Command c = Parser.parseInput(input);
                 c.execute(taskList, ui, storage);

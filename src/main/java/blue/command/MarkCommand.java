@@ -7,25 +7,25 @@ import blue.task.TaskList;
 import blue.ui.Ui;
 
 public class MarkCommand extends Command {
-    private final int idx;
+    private final int taskIndex;
 
     /**
      * Constructs a MarkCommand with the specified task index.
      *
-     * @param args Single integer representing 1-based task index.
+     * @param inputArgs Single integer representing 1-based task index.
      * @throws BlueException if argument is not a positive integer.
      */
-    public MarkCommand(String args) throws BlueException {
+    public MarkCommand(String inputArgs) throws BlueException {
         int markIdx;
         try {
-            markIdx = Integer.parseInt(args);
+            markIdx = Integer.parseInt(inputArgs);
         } catch (NumberFormatException e) {
             throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
         }
         if (markIdx <= 0) {
             throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
         }
-        this.idx = markIdx;
+        this.taskIndex = markIdx;
     }
 
     /**
@@ -38,10 +38,10 @@ public class MarkCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
-        if (idx > taskList.size()) {
-            throw new BlueException("There isn't a task " + idx + "!  (•̀⤙•́ )");
+        if (taskIndex > taskList.size()) {
+            throw new BlueException("There isn't a task " + taskIndex + "!  (•̀⤙•́ )");
         }
-        Task task = taskList.get(idx - 1);
+        Task task = taskList.get(taskIndex - 1);
         task.markDone();
 
         ui.taskMarkMessage(task);

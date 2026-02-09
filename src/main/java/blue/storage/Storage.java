@@ -11,7 +11,11 @@
 package blue.storage;
 
 import blue.exceptions.BlueException;
-import blue.task.*;
+import blue.task.Task;
+import blue.task.TaskList;
+import blue.task.ToDo;
+import blue.task.Deadline;
+import blue.task.Event;
 
 import java.io.IOException;
 
@@ -104,7 +108,7 @@ public class Storage {
      * @return Reconstructed Task object.
      * @throws BlueException if line format is corrupted or contains unknown task type.
      */
-    public Task convertToTask(String line) throws BlueException {
+    private Task convertToTask(String line) throws BlueException {
         String[] parts = line.split("\\s*\\|\\s*");
 
         if (parts.length < 3) {

@@ -11,7 +11,16 @@
 package blue.parser;
 
 import blue.exceptions.BlueException;
-import blue.command.*;
+import blue.command.Command;
+import blue.command.ExitCommand;
+import blue.command.ListCommand;
+import blue.command.MarkCommand;
+import blue.command.UnmarkCommand;
+import blue.command.AddToDoCommand;
+import blue.command.AddDeadlineCommand;
+import blue.command.AddEventCommand;
+import blue.command.DeleteCommand;
+import blue.command.FindCommand;
 
 public class Parser {
 
@@ -36,7 +45,7 @@ public class Parser {
             case "deadline" -> new AddDeadlineCommand(arguments);
             case "event" -> new AddEventCommand(arguments);
             case "delete" -> new DeleteCommand(arguments);
-            case "find" -> new findCommand(arguments);
+            case "find" -> new FindCommand(arguments);
             default -> throw new BlueException("I don't know what you want me to do about that ㅠ.ㅠ");
         };
     }

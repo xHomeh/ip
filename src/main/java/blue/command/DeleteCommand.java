@@ -7,25 +7,25 @@ import blue.task.TaskList;
 import blue.ui.Ui;
 
 public class DeleteCommand extends Command {
-    private final int idx;
+    private final int taskIndex;
 
     /**
      * Constructs a DeleteCommand with the specified task index.
      *
-     * @param args Single integer representing 1-based task index.
+     * @param inputArgs Single integer representing 1-based task index.
      * @throws BlueException if argument is not a positive integer.
      */
-    public DeleteCommand(String args) throws BlueException {
+    public DeleteCommand(String inputArgs) throws BlueException {
         int idx;
         try {
-            idx = Integer.parseInt(args);
+            idx = Integer.parseInt(inputArgs);
         } catch (NumberFormatException e) {
             throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
         }
         if (idx <= 0) {
             throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
         }
-        this.idx = idx;
+        this.taskIndex = idx;
     }
 
     /**
@@ -38,11 +38,11 @@ public class DeleteCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
-        if (idx > taskList.size()) {
-            throw new BlueException("There isn't a task " + idx + "!  (•̀⤙•́ )");
+        if (taskIndex > taskList.size()) {
+            throw new BlueException("There isn't a task " + taskIndex + "!  (•̀⤙•́ )");
         }
-        Task task = taskList.get(idx - 1);
-        taskList.remove(idx - 1);
+        Task task = taskList.get(taskIndex - 1);
+        taskList.remove(taskIndex - 1);
         ui.deleteTaskMessage(task);
 
         storage.save(taskList);

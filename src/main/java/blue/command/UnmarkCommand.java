@@ -7,25 +7,25 @@ import blue.task.TaskList;
 import blue.ui.Ui;
 
 public class UnmarkCommand extends Command {
-    private final int idx;
+    private final int taskIndex;
 
     /**
      * Constructs an UnmarkCommand with the specified task index.
      *
-     * @param args Single integer representing 1-based task index.
+     * @param inputArgs Single integer representing 1-based task index.
      * @throws BlueException if argument is not a positive integer.
      */
-    public UnmarkCommand(String args) throws BlueException {
+    public UnmarkCommand(String inputArgs) throws BlueException {
         int unmarkIdx;
         try {
-            unmarkIdx = Integer.parseInt(args);
+            unmarkIdx = Integer.parseInt(inputArgs);
         } catch (NumberFormatException e) {
             throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
         }
         if (unmarkIdx <= 0) {
             throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
         }
-        this.idx = unmarkIdx;
+        this.taskIndex = unmarkIdx;
     }
 
     /**
@@ -38,10 +38,10 @@ public class UnmarkCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
-        if (idx > taskList.size()) {
-            throw new BlueException("There isn't a task " + idx + "!  (•̀⤙•́ )");
+        if (taskIndex > taskList.size()) {
+            throw new BlueException("There isn't a task " + taskIndex + "!  (•̀⤙•́ )");
         }
-        Task task = taskList.get(idx - 1);
+        Task task = taskList.get(taskIndex - 1);
         task.unmarkDone();
 
         ui.taskUnmarkMessage(task);

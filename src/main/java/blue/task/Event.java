@@ -50,7 +50,9 @@ public class Event extends Task {
      */
     @Override
     public String toStorageString() {
-        return "E | " + super.toStorageString() + " | " + from.format(FORMAT_STORAGE) + " | " + to.format(FORMAT_STORAGE);
+        return "E | " + super.toStorageString() + " | "
+                + from.format(FORMAT_STORAGE) + " | "
+                + to.format(FORMAT_STORAGE);
     }
 
     /**
@@ -60,6 +62,9 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + String.format(" (from: %s to: %s)", from.format(FORMAT_DISPLAY), to.format(FORMAT_DISPLAY));
+        return "[E]" + super.toString()
+                + String.format(" (from: %s to: %s)",
+                from.format(FORMAT_DISPLAY),
+                to.format(FORMAT_DISPLAY));
     }
 }
