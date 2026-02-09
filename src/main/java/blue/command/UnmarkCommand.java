@@ -6,6 +6,9 @@ import blue.task.Task;
 import blue.task.TaskList;
 import blue.ui.Ui;
 
+/**
+ * Represents a command that unmarks a task as done in task list.
+ */
 public class UnmarkCommand extends Command {
     private final int taskIndex;
 

@@ -1,3 +1,5 @@
+package blue.task;
+
 /**
  * Base class for all task types in the Blue task management system.
  * <p>
@@ -8,8 +10,6 @@
  *
  * @author xHomeh / Joel Wong
  */
-package blue.task;
-
 public class Task {
     private final String description;
     private boolean isDone = false;

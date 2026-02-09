@@ -6,6 +6,9 @@ import blue.task.Task;
 import blue.task.TaskList;
 import blue.ui.Ui;
 
+/**
+ * Represents a command that deletes a task from the task list.
+ */
 public class DeleteCommand extends Command {
     private final int taskIndex;
 

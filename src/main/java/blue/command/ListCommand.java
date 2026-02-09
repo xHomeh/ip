@@ -5,6 +5,9 @@ import blue.storage.Storage;
 import blue.task.TaskList;
 import blue.ui.Ui;
 
+/**
+ * Represents a command that lists out the task list.
+ */
 public class ListCommand extends Command {
 
     /**

@@ -1,5 +1,7 @@
 package blue.command;
 
+import java.time.format.DateTimeParseException;
+
 import blue.exceptions.BlueException;
 import blue.storage.Storage;
 import blue.task.Event;
@@ -7,8 +9,9 @@ import blue.task.Task;
 import blue.task.TaskList;
 import blue.ui.Ui;
 
-import java.time.format.DateTimeParseException;
-
+/**
+ * Represents a command that adds an Event task to the task list.
+ */
 public class AddEventCommand extends Command {
     private final String inputArgs;
 

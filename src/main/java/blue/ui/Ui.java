@@ -1,3 +1,12 @@
+package blue.ui;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import blue.exceptions.BlueException;
+import blue.task.Task;
+
+
 /**
  * Handles all user interface interactions for the Blue task management chatbot.
  * <p>
@@ -8,14 +17,6 @@
  *
  * @author xHomeh / Joel Wong
  */
-package blue.ui;
-
-import blue.exceptions.BlueException;
-import blue.task.Task;
-
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class Ui {
     private static final String LINE = "__________________________________________________";
 

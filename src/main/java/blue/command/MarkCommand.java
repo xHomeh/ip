@@ -6,6 +6,9 @@ import blue.task.Task;
 import blue.task.TaskList;
 import blue.ui.Ui;
 
+/**
+ * Represents a command that marks a task as done in the task list.
+ */
 public class MarkCommand extends Command {
     private final int taskIndex;
 

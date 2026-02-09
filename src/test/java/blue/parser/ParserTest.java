@@ -1,11 +1,14 @@
 package blue.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
+
 import blue.command.AddDeadlineCommand;
 import blue.command.Command;
 import blue.exceptions.BlueException;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ParserTest {
     @Test
@@ -15,7 +18,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parseInput_deadlineCommand_AddDeadlineCommandClass() throws BlueException {
+    public void parseInput_deadlineCommand_addDeadlineCommandClass() throws BlueException {
         Command result = Parser.parseInput("deadline return books /by 2026 1 1");
         assertInstanceOf(AddDeadlineCommand.class, result);
     }

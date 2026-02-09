@@ -1,5 +1,7 @@
 package blue.command;
 
+import java.time.format.DateTimeParseException;
+
 import blue.exceptions.BlueException;
 import blue.storage.Storage;
 import blue.task.Deadline;
@@ -7,8 +9,9 @@ import blue.task.Task;
 import blue.task.TaskList;
 import blue.ui.Ui;
 
-import java.time.format.DateTimeParseException;
-
+/**
+ * Represents a command that adds a Deadline task to the task list.
+ */
 public class AddDeadlineCommand extends Command {
     private final String inputArgs;
 

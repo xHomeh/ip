@@ -1,3 +1,12 @@
+package blue;
+
+import blue.command.Command;
+import blue.exceptions.BlueException;
+import blue.parser.Parser;
+import blue.storage.Storage;
+import blue.task.TaskList;
+import blue.ui.Ui;
+
 /**
  * Blue is a task management chatbot application that helps users organize and track their tasks.
  * <p>
@@ -8,15 +17,6 @@
  *
  * @author xHomeh / Joel Wong
  */
-package blue;
-
-import blue.command.Command;
-import blue.exceptions.BlueException;
-import blue.parser.Parser;
-import blue.storage.Storage;
-import blue.task.TaskList;
-import blue.ui.Ui;
-
 public class Blue {
     private Ui ui;
     private Storage storage;

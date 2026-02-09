@@ -7,6 +7,9 @@ import blue.task.TaskList;
 import blue.task.ToDo;
 import blue.ui.Ui;
 
+/**
+ * Represents a command that adds a ToDo task to the task list.
+ */
 public class AddToDoCommand extends Command {
     private final String description;
 

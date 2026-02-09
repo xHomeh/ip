@@ -1,3 +1,5 @@
+package blue.exceptions;
+
 /**
  * Custom exception class for Blue task management chatbot errors.
  * <p>
@@ -9,8 +11,6 @@
  *
  * @author xHomeh / Joel Wong
  */
-package blue.exceptions;
-
 public class BlueException extends Exception {
 
     /**
