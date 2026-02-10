@@ -17,6 +17,6 @@ public class EventTest {
     @Test
     public void toString_newEvent_correctString() throws BlueException {
         Event e = new Event("seminar", "2026 2 10", "2026 2 15");
-        assertEquals("[E][ ] seminar (from: 10 Feb 2026 to: 15 Feb 2026)", e.toString());
+        assertEquals("[E][  ] seminar (from: 10 Feb 2026 to: 15 Feb 2026)", e.toString());
     }
 }

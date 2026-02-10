@@ -25,7 +25,7 @@ public abstract class Command {
      * @param storage  File storage for saving task changes.
      * @throws BlueException if command execution fails due to invalid input, bounds errors, etc.
      */
-    public abstract void execute(TaskList taskList, Ui ui, Storage storage) throws BlueException;
+    public abstract String execute(TaskList taskList, Ui ui, Storage storage) throws BlueException;
 
     /**
      * Checks if this command terminates the application.

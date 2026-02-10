@@ -45,7 +45,7 @@ public class AddEventCommand extends Command {
      *                       empty dates, invalid date format, or end date before start date.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
         BlueException emptyException = new BlueException("The description can't be empty! =/");
 
         String[] eventInfo = new String[3];
@@ -78,9 +78,8 @@ public class AddEventCommand extends Command {
         try {
             Task task = new Event(eventInfo[0], eventInfo[1], eventInfo[2]);
             taskList.add(task);
-            ui.addTaskMessage(task, taskList.size());
-
             storage.save(taskList);
+            return ui.addTaskMessage(task, taskList.size());
         } catch (DateTimeParseException e) {
             throw new BlueException("Uh oh! I don't understand that date format, try yyyy-mm-dd!");
         }

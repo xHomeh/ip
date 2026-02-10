@@ -18,22 +18,22 @@ import blue.task.Task;
  * @author xHomeh / Joel Wong
  */
 public class Ui {
-    private static final String LINE = "__________________________________________________";
+    private static final String LINE = "_________________________";
 
     private final Scanner scanner = new Scanner(System.in);
 
     /**
      * Prints the divider line.
      */
-    public void showLine() {
-        System.out.println(LINE);
+    public String showLine() {
+        return LINE + "\n";
     }
 
     /**
      * Displays the startup greeting with Blue's ASCII art logo
      * followed by asking what the user needs help with.
      */
-    public void greet() {
+    public String greet() {
         String logo = """
                  ____  _           \s
                 |  _ \\| |            \s
@@ -42,31 +42,32 @@ public class Ui {
                 | |_) | | |_| |  __/  \s
                 |____/|_|\\__,_|\\___|\s
                 """;
-        System.out.print(logo);
 
         String greeting = "Hi☆・*。It's me, Blue! \n"
                 + "What do you need help with?";
 
-        wrapTextWithLines(greeting);
+        String message = logo + greeting;
+
+        return wrapTextWithLines(message);
     }
 
     /**
      * Displays the farewell message when exiting the application.
      */
-    public void bye() {
+    public String bye() {
         String goodbye = "Byeee (^_^)/~ See you soon!";
 
-        showLine();
-        System.out.println(goodbye);
-        showLine();
+        return showLine()
+                + goodbye + "\n"
+                + showLine();
     }
 
     /**
      * Prints the command prompt indicator to indicate user
      * can enter a command.
      */
-    public void printCommandPrompt() {
-        System.out.print("> ");
+    public String printCommandPrompt() {
+        return "> ";
     }
 
     /**
@@ -83,11 +84,10 @@ public class Ui {
      *
      * @param str The message to display with line wrapping.
      */
-    public void wrapTextWithLines(String str) {
-        showLine();
-        System.out.println(str);
-        showLine();
-        System.out.println();
+    public String wrapTextWithLines(String str) {
+        return showLine()
+            + str + "\n"
+            + showLine() + "\n";
     }
 
     /**
@@ -96,20 +96,18 @@ public class Ui {
      * @param tasks The list of tasks to display.
      * @throws BlueException if no tasks found
      */
-    public void printList(ArrayList<Task> tasks) throws BlueException {
+    public String printList(ArrayList<Task> tasks) throws BlueException {
         if (tasks.isEmpty()) {
             throw new BlueException("Wow! There's nothing to do!");
         }
-
-        showLine();
+        String message = showLine();
 
         for (int i = 0; i < tasks.size(); i++) {
-            String message = (i + 1) + ". " + tasks.get(i).toString();
-            System.out.println(message);
+            message += (i + 1) + ". " + tasks.get(i).toString() + "\n";
         }
 
-        showLine();
-        System.out.println();
+        message += showLine() + "\n";
+        return message;
     }
 
     /**
@@ -118,11 +116,11 @@ public class Ui {
      * @param task  The task that was added.
      * @param size  The total number of tasks after adding.
      */
-    public void addTaskMessage(Task task, int size) {
+    public String addTaskMessage(Task task, int size) {
         String message = "Okay! I'll add this task now! \n"
                 + task + "\n"
                 + String.format("You have %d tasks!", size);
-        wrapTextWithLines(message);
+        return wrapTextWithLines(message);
     }
 
     /**
@@ -130,10 +128,10 @@ public class Ui {
      *
      * @param task The task that was marked as completed.
      */
-    public void taskMarkMessage(Task task) {
+    public String taskMarkMessage(Task task) {
         String message = "YAY this task is now done!! ^o^ \n"
                 + task;
-        wrapTextWithLines(message);
+        return wrapTextWithLines(message);
     }
 
     /**
@@ -141,10 +139,10 @@ public class Ui {
      *
      * @param task The task that was unmarked.
      */
-    public void taskUnmarkMessage(Task task) {
+    public String taskUnmarkMessage(Task task) {
         String message = "Okay, I deleted that for you! \n"
                 + task;
-        wrapTextWithLines(message);
+        return wrapTextWithLines(message);
     }
 
     /**
@@ -152,10 +150,10 @@ public class Ui {
      *
      * @param task The task that was deleted.
      */
-    public void deleteTaskMessage(Task task) {
+    public String deleteTaskMessage(Task task) {
         String message = "Okay, I deleted that for you! \n"
                 + task;
-        wrapTextWithLines(message);
+        return wrapTextWithLines(message);
     }
 
     /**
@@ -164,27 +162,26 @@ public class Ui {
      * @param tasks List of tasks matching search criteria.
      * @throws BlueException if no tasks found (empty list).
      */
-    public void showFoundTasks(ArrayList<Task> tasks) throws BlueException {
+    public String showFoundTasks(ArrayList<Task> tasks) throws BlueException {
         if (tasks.isEmpty()) {
             throw new BlueException("Couldn't find any tasks with that keyword :(");
         }
 
-        showLine();
-        System.out.println("Here are the tasks I found!");
+        String message = showLine()
+                + "Here are the tasks I found!\n";
 
         for (int i = 0; i < tasks.size(); i++) {
-            String message = (i + 1) + ". " + tasks.get(i).toString();
-            System.out.println(message);
+            message += (i + 1) + ". " + tasks.get(i).toString() + "\n";
         }
 
-        showLine();
-        System.out.println();
+        message += showLine() + "\n";
+        return message;
     }
 
     /**
      * Displays an error message when task loading from storage fails.
      */
-    public void showTaskLoadingError() {
-        wrapTextWithLines("Couldn't load tasks (╥﹏╥) Initialising with empty task list!");
+    public String showTaskLoadingError() {
+        return wrapTextWithLines("Couldn't load tasks (╥﹏╥) Initialising with empty task list!");
     }
 }

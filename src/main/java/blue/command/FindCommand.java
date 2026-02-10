@@ -36,8 +36,8 @@ public class FindCommand extends Command {
      * @throws BlueException if task list search cannot find any match.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
         ArrayList<Task> foundTasks = taskList.findTasks(inputArgs);
-        ui.showFoundTasks(foundTasks);
+        return ui.showFoundTasks(foundTasks);
     }
 }

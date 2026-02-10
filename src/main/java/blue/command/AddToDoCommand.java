@@ -35,11 +35,10 @@ public class AddToDoCommand extends Command {
      * @throws BlueException Not thrown by this implementation (validation done in constructor).
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
         Task task = new ToDo(description);
         taskList.add(task);
-        ui.addTaskMessage(task, taskList.size());
-
         storage.save(taskList);
+        return ui.addTaskMessage(task, taskList.size());
     }
 }

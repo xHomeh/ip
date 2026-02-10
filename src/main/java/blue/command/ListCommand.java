@@ -19,7 +19,7 @@ public class ListCommand extends Command {
      * @throws BlueException Not thrown by this implementation.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
-        ui.printList(taskList.getTasks());
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
+        return ui.printList(taskList.getTasks());
     }
 }

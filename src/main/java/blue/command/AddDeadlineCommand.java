@@ -43,7 +43,7 @@ public class AddDeadlineCommand extends Command {
      *                       or invalid date format.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
         BlueException emptyException = new BlueException("The description can't be empty! =/");
 
         String[] deadlineInfo = new String[2];
@@ -69,9 +69,8 @@ public class AddDeadlineCommand extends Command {
         try {
             Task task = new Deadline(deadlineInfo[0], deadlineInfo[1]);
             taskList.add(task);
-            ui.addTaskMessage(task, taskList.size());
-
             storage.save(taskList);
+            return ui.addTaskMessage(task, taskList.size());
         } catch (DateTimeParseException e) {
             throw new BlueException("Uh oh! I don't understand that date format, try yyyy-mm-dd!");
         }
