@@ -70,6 +70,13 @@ public class Blue {
     }
 
     /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        return "Blue heard: " + input;
+    }
+
+    /**
      * The main entry point for the Blue chatbot application.
      * <p>
      * This method initializes a new instance of Blue with a default
