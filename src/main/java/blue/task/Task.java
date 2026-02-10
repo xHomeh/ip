@@ -57,7 +57,7 @@ public class Task {
      */
     @Override
     public String toString() {
-        String checkbox = "[ ] ";
+        String checkbox = "[  ] ";
         if (isDone) {
             checkbox = "[X] ";
         }

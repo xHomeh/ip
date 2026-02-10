@@ -44,48 +44,18 @@ public class Blue {
     }
 
     /**
-     * Starts the main execution loop of the Blue chatbot.
-     * <p>
-     * This method greets the user, repeatedly reads and processes user commands,
-     * then executes the corresponding actions through the parser and command system.
-     * The loop continues until the user issues an exit command, after which a farewell
-     * message is displayed before terminating.
-     * </p>
-     */
-    public void run() {
-        ui.greet();
-        boolean isExit = false;
-        while (!isExit) {
-            try {
-                ui.printCommandPrompt();
-                String input = ui.readCommand();
-                Command c = Parser.parseInput(input);
-                c.execute(taskList, ui, storage);
-                isExit = c.shouldExit();
-            } catch (BlueException e) {
-                ui.wrapTextWithLines(e.getMessage());
-            }
-        }
-        ui.bye();
-    }
-
-    /**
      * Generates a response for the user's chat message.
+     *
+     * @param input Command that user input.
+     * @return Corresponding response for the command.
      */
     public String getResponse(String input) {
-        return "Blue heard: " + input;
-    }
-
-    /**
-     * The main entry point for the Blue chatbot application.
-     * <p>
-     * This method initializes a new instance of Blue with a default
-     * storage file and begins execution by calling run().
-     * </p>
-     *
-     * @param args Command-line arguments (not used).
-     */
-    public static void main(String[] args) {
-        new Blue("Blue.txt").run();
+        try {
+            Command c = Parser.parseInput(input);
+            String response = c.execute(taskList, ui, storage);
+            return response;
+        } catch (BlueException e) {
+            return ui.wrapTextWithLines(e.getMessage());
+        }
     }
 }

@@ -40,14 +40,13 @@ public class DeleteCommand extends Command {
      * @throws BlueException if task index exceeds list bounds.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
         if (taskIndex > taskList.size()) {
             throw new BlueException("There isn't a task " + taskIndex + "!  (•̀⤙•́ )");
         }
         Task task = taskList.get(taskIndex - 1);
         taskList.remove(taskIndex - 1);
-        ui.deleteTaskMessage(task);
-
         storage.save(taskList);
+        return ui.deleteTaskMessage(task);
     }
 }
