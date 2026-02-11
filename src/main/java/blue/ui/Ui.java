@@ -1,7 +1,6 @@
 package blue.ui;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import blue.exceptions.BlueException;
 import blue.task.Task;
@@ -19,8 +18,6 @@ import blue.task.Task;
  */
 public class Ui {
     private static final String LINE = "_________________________";
-
-    private final Scanner scanner = new Scanner(System.in);
 
     /**
      * Prints the divider line.
@@ -60,23 +57,6 @@ public class Ui {
         return showLine()
                 + goodbye + "\n"
                 + showLine();
-    }
-
-    /**
-     * Prints the command prompt indicator to indicate user
-     * can enter a command.
-     */
-    public String printCommandPrompt() {
-        return "> ";
-    }
-
-    /**
-     * Reads a command from the user via console input.
-     *
-     * @return The user's input command as a trimmed string.
-     */
-    public String readCommand() {
-        return scanner.nextLine().trim();
     }
 
     /**

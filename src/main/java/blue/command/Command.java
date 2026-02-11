@@ -26,16 +26,4 @@ public abstract class Command {
      * @throws BlueException if command execution fails due to invalid input, bounds errors, etc.
      */
     public abstract String execute(TaskList taskList, Ui ui, Storage storage) throws BlueException;
-
-    /**
-     * Checks if this command terminates the application.
-     * <p>
-     * Most commands return false. Exit commands override to return true.
-     * </p>
-     *
-     * @return true if this command should exit the application, false otherwise.
-     */
-    public boolean shouldExit() {
-        return false;
-    }
 }

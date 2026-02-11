@@ -20,14 +20,4 @@ public class ExitCommand extends Command {
     public String execute(TaskList tasks, Ui ui, Storage storage) {
         return ui.bye();
     }
-
-    /**
-     * Signals that this command terminates the application.
-     *
-     * @return true to indicate application should exit.
-     */
-    @Override
-    public boolean shouldExit() {
-        return true;
-    }
 }
