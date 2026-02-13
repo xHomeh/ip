@@ -2,6 +2,7 @@ package blue.task;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -154,16 +155,37 @@ public class TaskList {
     }
 
     /**
-     * Finds all tasks whose descriptions contain the given keyword.
+     * Finds all tasks whose descriptions contain every keyword in the query.
      *
-     * @param str Keyword to search for in task descriptions.
-     * @return List of tasks containing the keyword (case-insensitive match).
+     * @param query Search query containing one or more keywords.
+     * @return List of tasks containing all keywords (case-insensitive match).
      */
-    public ArrayList<Task> findTasks(String str) {
-        assert str != null : "Find keyword should not be null!";
-        String lowerCaseKeyword = str.toLowerCase();
+    public ArrayList<Task> findTasks(String query) {
+        assert query != null : "Find query should not be null!";
+
+        List<String> keywords = Arrays.stream(query.trim().toLowerCase().split("\\s+"))
+                .filter(keyword -> !keyword.isBlank())
+                .toList();
+
         return tasks.stream()
-                .filter(task -> task.getDescription().toLowerCase().contains(lowerCaseKeyword))
+                .filter(task -> containsAllKeywords(task.getDescription(), keywords))
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    /**
+     * Checks whether the given description contains all specified keywords.
+     * <p>
+     * The comparison is case-insensitive and matches keywords as substrings
+     * within the description.
+     * Made with the assistance of ChatGPT.
+     *
+     * @param description The task description to search within.
+     * @param keywords A list of keywords that must all be present.
+     * @return {@code true} if the description contains all keywords;
+     *         {@code false} otherwise.
+     */
+    private boolean containsAllKeywords(String description, List<String> keywords) {
+        String lowerCaseDescription = description.toLowerCase();
+        return keywords.stream().allMatch(lowerCaseDescription::contains);
     }
 }

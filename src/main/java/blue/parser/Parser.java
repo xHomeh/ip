@@ -33,6 +33,10 @@ public class Parser {
      */
     public static Command parseInput(String input) throws BlueException {
         assert input != null : "Parser expects a non-null input string.";
+        if (input.trim().isEmpty()) {
+            throw new BlueException("Please enter a command so I can help you!");
+        }
+
         String[] parts = input.split("\\s+", 2);
         assert parts.length >= 1 : "Split command input should always produce at least one token.";
 
