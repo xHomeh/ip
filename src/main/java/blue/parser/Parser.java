@@ -32,9 +32,14 @@ public class Parser {
      * @throws BlueException if command is unknown or invalid.
      */
     public static Command parseInput(String input) throws BlueException {
+        assert input != null : "Parser expects a non-null input string.";
         String[] parts = input.split("\\s+", 2);
+        assert parts.length >= 1 : "Split command input should always produce at least one token.";
+
         String command = parts[0].toLowerCase();
         String arguments = (parts.length > 1) ? parts[1] : "";
+
+        assert arguments != null : "Parsed command arguments should default to an empty string.";
 
         return switch (command) {
         case "exit", "bye", "quit", "q" -> new ExitCommand();
