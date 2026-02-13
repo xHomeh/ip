@@ -2,7 +2,6 @@ package blue.task;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 /**
@@ -46,7 +45,7 @@ public class TaskList {
     }
 
     /**
-     * Removes a task at the specified 0-based index.
+     * Removes tasks at the specified 0-based indices.
      *
      * @param indices Array of 0-based index of task to remove.
      */
@@ -68,6 +67,11 @@ public class TaskList {
         tasks = new ArrayList<>();
     }
 
+    /**
+     * Mark tasks at the specified 0-based indices as done.
+     *
+     * @param indices Array of 0-based index of task to mark as done.
+     */
     public void mark(int... indices) {
         assert indices != null && indices.length > 0 : "Must pass at least one index!";
 
@@ -77,12 +81,20 @@ public class TaskList {
         }
     }
 
+    /**
+     * Mark all tasks as done.
+     */
     public void markAll() {
         for (Task task : tasks) {
             task.markDone();
         }
     }
 
+    /**
+     * Unmark tasks at the specified 0-based indices as done.
+     *
+     * @param indices Array of 0-based index of task to unmark as done.
+     */
     public void unmark(int... indices) {
         assert indices != null && indices.length > 0 : "Must pass at least one index!";
 
@@ -92,6 +104,9 @@ public class TaskList {
         }
     }
 
+    /**
+     * Unmark all tasks as done.
+     */
     public void unmarkAll() {
         for (Task task : tasks) {
             task.unmarkDone();
