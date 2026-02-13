@@ -106,35 +106,66 @@ public class Ui {
     /**
      * Shows confirmation when a task is marked as done.
      *
-     * @param task The task that was marked as completed.
+     * @param tasks The tasks that were marked as completed.
      */
-    public String taskMarkMessage(Task task) {
-        String message = "YAY this task is now done!! ^o^ \n"
-                + task;
+    public String taskMarkMessage(Task... tasks) {
+        String message = "YAY it's now done!! ^o^ \n";
+        for (Task task : tasks) {
+            message += task + "\n";
+        }
         return wrapTextWithLines(message);
     }
 
     /**
      * Shows confirmation when a task is unmarked (set back to not done).
      *
-     * @param task The task that was unmarked.
+     * @param tasks The tasks that were unmarked.
      */
-    public String taskUnmarkMessage(Task task) {
-        String message = "Okay, I deleted that for you! \n"
-                + task;
+    public String taskUnmarkMessage(Task... tasks) {
+        String message = "I thought you already did that ㅜ_ㅜ \n";
+        for (Task task : tasks) {
+            message += task + "\n";
+        }
         return wrapTextWithLines(message);
     }
 
     /**
      * Shows confirmation when a task is deleted from the list.
      *
-     * @param task The task that was deleted.
+     * @param tasks The tasks that were deleted.
      */
-    public String deleteTaskMessage(Task task) {
-        String message = "Okay, I deleted that for you! \n"
-                + task;
+    public String deleteTaskMessage(Task... tasks) {
+        String message = "Okay, I deleted that for you! \n";
+        for (Task task : tasks) {
+            message += task + "\n";
+        }
         return wrapTextWithLines(message);
     }
+
+    /**
+     * Shows confirmation that all tasks are deleted from the list.
+     */
+    public String deleteAllTasks() {
+        String message = "Okay, I deleted everything!";
+        return wrapTextWithLines(message);
+    }
+
+    /**
+     * Shows confirmation that all tasks are marked.
+     */
+    public String markAllTasks() {
+        String message = "Okay, I marked everything as done!";
+        return wrapTextWithLines(message);
+    }
+
+    /**
+     * Shows confirmation that all tasks are unmarked.
+     */
+    public String unmarkAllTasks() {
+        String message = "Okay, I unmarked everything as done!";
+        return wrapTextWithLines(message);
+    }
+
 
     /**
      * Displays a numbered list of found tasks or throws an exception if none found.
