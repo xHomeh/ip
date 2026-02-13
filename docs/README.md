@@ -90,3 +90,5 @@ Examples:
 
 ## Exiting Blue Chatbot: `bye`, `exit`, `quit`, `q`
 Exits the BlueBot application.
+
+Format: `bye`, `exit`, `quit`, `q`
