@@ -34,6 +34,7 @@ public class Storage {
      * @param fileName The name of the file to store tasks (e.g., "Blue.txt").
      */
     public Storage(String fileName) {
+        assert fileName != null && !fileName.isBlank() : "Storage file name should be provided.";
         filePath = Paths.get("data", fileName);
     }
 
@@ -78,12 +79,14 @@ public class Storage {
      * @throws BlueException if IO error occurs during file writing.
      */
     public void save(TaskList taskList) throws BlueException {
+        assert taskList != null : "Save expects a non-null task list!";
         try {
             Files.createDirectories(filePath.getParent());
 
             List<String> lines = new ArrayList<>();
 
             for (Task t : taskList.getTasks()) {
+                assert t != null : "Storage should only save non-null tasks!";
                 lines.add(t.toStorageString());
             }
 
@@ -107,6 +110,7 @@ public class Storage {
      * @throws BlueException if line format is corrupted or contains unknown task type.
      */
     private Task convertToTask(String line) throws BlueException {
+        assert line != null : "Storage lines should be non-null before conversion.";
         String[] parts = line.split("\\s*\\|\\s*");
 
         if (parts.length < 3) {
@@ -116,6 +120,8 @@ public class Storage {
         String type = parts[0];
         boolean isDone = parts[1].equals("1");
         String description = parts[2];
+
+        assert !description.isBlank() : "Stored tasks should always include a non-empty description.";
 
         Task task;
 
@@ -146,6 +152,7 @@ public class Storage {
             task.markDone();
         }
 
+        assert task != null : "Task created must not be null!";
         return task;
     }
 }

@@ -29,6 +29,7 @@ public class TaskList {
      * @param tasks Preloaded Task objects from storage.
      */
     public TaskList(ArrayList<Task> tasks) {
+        assert tasks != null : "TaskList should not store null tasks!";
         this.tasks = tasks;
     }
 
@@ -38,6 +39,7 @@ public class TaskList {
      * @param task The Task to add.
      */
     public void add(Task task) {
+        assert task != null : "TaskList should not store null tasks!";
         tasks.add(task);
     }
 
@@ -47,6 +49,7 @@ public class TaskList {
      * @param idx 0-based index of task to remove.
      */
     public void remove(int idx) {
+        assert idx >= 0 && idx < tasks.size() : "Index must refer to an existing task before removal!";
         tasks.remove(idx);
     }
 
@@ -66,7 +69,10 @@ public class TaskList {
      * @return Task at the specified position.
      */
     public Task get(int idx) {
-        return tasks.get(idx);
+        assert idx >= 0 && idx < tasks.size() : "Index must refer to an existing task before retrieving!";
+        Task task = tasks.get(idx);
+        assert task != null : "TaskList should not store null tasks!";
+        return task;
     }
 
     /**
@@ -85,6 +91,7 @@ public class TaskList {
      * @return List of tasks containing the keyword (case-insensitive match).
      */
     public ArrayList<Task> findTasks(String str) {
+        assert str != null : "Find keyword should not be null!";
         String lowerCaseKeyword = str.toLowerCase();
         return tasks.stream()
                 .filter(task -> task.getDescription().toLowerCase().contains(lowerCaseKeyword))
