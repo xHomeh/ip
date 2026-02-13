@@ -1,6 +1,7 @@
 package blue.task;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Manages a collection of Task objects for the Blue task management system.
@@ -84,12 +85,9 @@ public class TaskList {
      * @return List of tasks containing the keyword (case-insensitive match).
      */
     public ArrayList<Task> findTasks(String str) {
-        ArrayList<Task> result = new ArrayList<>();
-        for (Task t : tasks) {
-            if (t.getDescription().toLowerCase().contains(str.toLowerCase())) {
-                result.add(t);
-            }
-        }
-        return result;
+        String lowerCaseKeyword = str.toLowerCase();
+        return tasks.stream()
+                .filter(task -> task.getDescription().toLowerCase().contains(lowerCaseKeyword))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }
