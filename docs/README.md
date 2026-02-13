@@ -30,7 +30,7 @@ Examples:
 ## Adding a new event: `event`
 Adds a new event task to the list.
 
-Format: `event DESCRIPTION /by DATE [YYYY MM DD] /to DATE [YYYY MM DD]`
+Format: `event DESCRIPTION /from DATE [YYYY MM DD] /to DATE [YYYY MM DD]`
 
 Examples:
 * `event Seminar /from 2026 2 21 /to 2026 2 22`
