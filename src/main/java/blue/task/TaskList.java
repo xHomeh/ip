@@ -168,24 +168,24 @@ public class TaskList {
                 .toList();
 
         return tasks.stream()
-                .filter(task -> containsAllKeywords(task.getDescription(), keywords))
+                .filter(task -> containsAnyKeyword(task.getDescription(), keywords))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
-     * Checks whether the given description contains all specified keywords.
+     * Checks whether the given description contains at least one of the
+     * specified keywords.
      * <p>
      * The comparison is case-insensitive and matches keywords as substrings
      * within the description.
-     * Made with the assistance of ChatGPT.
      *
      * @param description The task description to search within.
-     * @param keywords A list of keywords that must all be present.
-     * @return {@code true} if the description contains all keywords;
+     * @param keywords A list of keywords to match against.
+     * @return {@code true} if the description contains any keyword;
      *         {@code false} otherwise.
      */
-    private boolean containsAllKeywords(String description, List<String> keywords) {
+    private boolean containsAnyKeyword(String description, List<String> keywords) {
         String lowerCaseDescription = description.toLowerCase();
-        return keywords.stream().allMatch(lowerCaseDescription::contains);
+        return keywords.stream().anyMatch(lowerCaseDescription::contains);
     }
 }
