@@ -1,6 +1,8 @@
 package blue.task;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 /**
@@ -46,12 +48,56 @@ public class TaskList {
     /**
      * Removes a task at the specified 0-based index.
      *
-     * @param idx 0-based index of task to remove.
+     * @param indices Array of 0-based index of task to remove.
      */
-    public void remove(int idx) {
-        assert idx >= 0 && idx < tasks.size() : "Index must refer to an existing task before removal!";
-        tasks.remove(idx);
+    public void remove(int... indices) {
+        assert indices != null && indices.length > 0 : "Must pass at least one index!";
+
+        Arrays.sort(indices);
+        for (int i = indices.length - 1; i >= 0; i--) {
+            int idx = indices[i];
+            assert idx >= 0 && idx < tasks.size() : "Index must refer to an existing task before removal!";
+            tasks.remove(idx);
+        }
     }
+
+    /**
+     * Resets list to be empty.
+     */
+    public void removeAll() {
+        tasks = new ArrayList<>();
+    }
+
+    public void mark(int... indices) {
+        assert indices != null && indices.length > 0 : "Must pass at least one index!";
+
+        for (int idx : indices) {
+            assert idx >= 0 && idx < tasks.size() : "Index must refer to an existing task before removal!";
+            tasks.get(idx).markDone();
+        }
+    }
+
+    public void markAll() {
+        for (Task task : tasks) {
+            task.markDone();
+        }
+    }
+
+    public void unmark(int... indices) {
+        assert indices != null && indices.length > 0 : "Must pass at least one index!";
+
+        for (int idx : indices) {
+            assert idx >= 0 && idx < tasks.size() : "Index must refer to an existing task before removal!";
+            tasks.get(idx).unmarkDone();
+        }
+    }
+
+    public void unmarkAll() {
+        for (Task task : tasks) {
+            task.unmarkDone();
+        }
+    }
+
 
     /**
      * Returns the number of tasks in the list.
@@ -65,14 +111,22 @@ public class TaskList {
     /**
      * Retrieves a task at the specified 0-based index.
      *
-     * @param idx 0-based index of task to retrieve.
+     * @param indices Array of 0-based index of task to retrieve.
      * @return Task at the specified position.
      */
-    public Task get(int idx) {
-        assert idx >= 0 && idx < tasks.size() : "Index must refer to an existing task before retrieving!";
-        Task task = tasks.get(idx);
-        assert task != null : "TaskList should not store null tasks!";
-        return task;
+    public Task[] get(int... indices) {
+        assert indices != null && indices.length > 0 : "Must pass at least one index!";
+
+        Task[] result = new Task[indices.length];
+
+        for (int i = 0; i < indices.length; i++) {
+            int idx = indices[i];
+            assert idx >= 0 && idx < tasks.size() : "Index must refer to an existing task before retrieving!";
+            Task task = tasks.get(idx);
+            assert task != null : "TaskList should not store null tasks!";
+            result[i] = task;
+        }
+        return result;
     }
 
     /**

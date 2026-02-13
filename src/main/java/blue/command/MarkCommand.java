@@ -10,7 +10,8 @@ import blue.ui.Ui;
  * Represents a command that marks a task as done in the task list.
  */
 public class MarkCommand extends Command {
-    private final int taskIndex;
+    private boolean shouldMarkAll = false;
+    private int[] taskIndices;
 
     /**
      * Constructs a MarkCommand with the specified task index.
@@ -19,16 +20,27 @@ public class MarkCommand extends Command {
      * @throws BlueException if argument is not a positive integer.
      */
     public MarkCommand(String inputArgs) throws BlueException {
-        int markIdx;
-        try {
-            markIdx = Integer.parseInt(inputArgs);
-        } catch (NumberFormatException e) {
-            throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
+        if (inputArgs.trim().equalsIgnoreCase("all")) {
+            this.shouldMarkAll = true;
+            return;
         }
-        if (markIdx <= 0) {
-            throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
+
+        String[] argsArr = inputArgs.split(",", -1);
+        int[] taskIndices = new int[argsArr.length];
+
+        for (int i = 0; i < argsArr.length; i++) {
+            int idx;
+            try {
+                idx = Integer.parseInt(argsArr[i].trim());
+            } catch (NumberFormatException e) {
+                throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
+            }
+            if (idx <= 0) {
+                throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
+            }
+            taskIndices[i] = idx;
         }
-        this.taskIndex = markIdx;
+        this.taskIndices = taskIndices;
     }
 
     /**
@@ -41,12 +53,23 @@ public class MarkCommand extends Command {
      */
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
-        if (taskIndex > taskList.size()) {
-            throw new BlueException("There isn't a task " + taskIndex + "!  (•̀⤙•́ )");
+        if (shouldMarkAll) {
+            taskList.markAll();
+            storage.save(taskList);
+            return ui.markAllTasks();
         }
-        Task task = taskList.get(taskIndex - 1);
-        task.markDone();
+
+        for (int i = 0; i < taskIndices.length; i++) {
+            int taskIndex = taskIndices[i];
+            if (taskIndex > taskList.size()) {
+                throw new BlueException("There isn't a task " + taskIndex + "!  (•̀⤙•́ )");
+            }
+            taskIndices[i] = taskIndex - 1;
+        }
+
+        Task[] tasks = taskList.get(taskIndices);
+        taskList.mark(taskIndices);
         storage.save(taskList);
-        return ui.taskMarkMessage(task);
+        return ui.taskMarkMessage(tasks);
     }
 }

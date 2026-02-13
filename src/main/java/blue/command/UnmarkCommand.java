@@ -10,25 +10,37 @@ import blue.ui.Ui;
  * Represents a command that unmarks a task as done in task list.
  */
 public class UnmarkCommand extends Command {
-    private final int taskIndex;
+    private boolean shouldUnmarkAll = false;
+    private int[] taskIndices;
 
     /**
-     * Constructs an UnmarkCommand with the specified task index.
+     * Constructs a MarkCommand with the specified task index.
      *
      * @param inputArgs Single integer representing 1-based task index.
      * @throws BlueException if argument is not a positive integer.
      */
     public UnmarkCommand(String inputArgs) throws BlueException {
-        int unmarkIdx;
-        try {
-            unmarkIdx = Integer.parseInt(inputArgs);
-        } catch (NumberFormatException e) {
-            throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
+        if (inputArgs.trim().equalsIgnoreCase("all")) {
+            this.shouldUnmarkAll = true;
+            return;
         }
-        if (unmarkIdx <= 0) {
-            throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
+
+        String[] argsArr = inputArgs.trim().split(",", -1);
+        int[] taskIndices = new int[argsArr.length];
+
+        for (int i = 0; i < argsArr.length; i++) {
+            int idx;
+            try {
+                idx = Integer.parseInt(argsArr[i].trim());
+            } catch (NumberFormatException e) {
+                throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
+            }
+            if (idx <= 0) {
+                throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
+            }
+            taskIndices[i] = idx;
         }
-        this.taskIndex = unmarkIdx;
+        this.taskIndices = taskIndices;
     }
 
     /**
@@ -41,12 +53,23 @@ public class UnmarkCommand extends Command {
      */
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
-        if (taskIndex > taskList.size()) {
-            throw new BlueException("There isn't a task " + taskIndex + "!  (•̀⤙•́ )");
+        if (shouldUnmarkAll) {
+            taskList.unmarkAll();
+            storage.save(taskList);
+            return ui.unmarkAllTasks();
         }
-        Task task = taskList.get(taskIndex - 1);
-        task.unmarkDone();
+
+        for (int i = 0; i < taskIndices.length; i++) {
+            int taskIndex = taskIndices[i];
+            if (taskIndex > taskList.size()) {
+                throw new BlueException("There isn't a task " + taskIndex + "!  (•̀⤙•́ )");
+            }
+            taskIndices[i] = taskIndex - 1;
+        }
+
+        Task[] tasks = taskList.get(taskIndices);
+        taskList.unmark(taskIndices);
         storage.save(taskList);
-        return ui.taskUnmarkMessage(task);
+        return ui.taskUnmarkMessage(tasks);
     }
 }

@@ -10,7 +10,8 @@ import blue.ui.Ui;
  * Represents a command that deletes a task from the task list.
  */
 public class DeleteCommand extends Command {
-    private final int taskIndex;
+    private boolean shouldDeleteAll = false;
+    private int[] taskIndices;
 
     /**
      * Constructs a DeleteCommand with the specified task index.
@@ -19,16 +20,27 @@ public class DeleteCommand extends Command {
      * @throws BlueException if argument is not a positive integer.
      */
     public DeleteCommand(String inputArgs) throws BlueException {
-        int idx;
-        try {
-            idx = Integer.parseInt(inputArgs);
-        } catch (NumberFormatException e) {
-            throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
+        if (inputArgs.trim().equalsIgnoreCase("all")) {
+            this.shouldDeleteAll = true;
+            return;
         }
-        if (idx <= 0) {
-            throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
+
+        String[] argsArr = inputArgs.split(",", -1);
+        int[] taskIndices = new int[argsArr.length];
+
+        for (int i = 0; i < argsArr.length; i++) {
+            int idx;
+            try {
+                idx = Integer.parseInt(argsArr[i].trim());
+            } catch (NumberFormatException e) {
+                throw new BlueException("Give me a number ( ｡ •̀ ᴖ •́ ｡)");
+            }
+            if (idx <= 0) {
+                throw new BlueException("Number must be positive!!! ୧(๑•̀ᗝ•́)૭");
+            }
+            taskIndices[i] = idx;
         }
-        this.taskIndex = idx;
+        this.taskIndices = taskIndices;
     }
 
     /**
@@ -41,12 +53,23 @@ public class DeleteCommand extends Command {
      */
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
-        if (taskIndex > taskList.size()) {
-            throw new BlueException("There isn't a task " + taskIndex + "!  (•̀⤙•́ )");
+        if (shouldDeleteAll) {
+            taskList.removeAll();
+            storage.save(taskList);
+            return ui.deleteAllTasks();
         }
-        Task task = taskList.get(taskIndex - 1);
-        taskList.remove(taskIndex - 1);
+
+        for (int i = 0; i < taskIndices.length; i++) {
+            int taskIndex = taskIndices[i];
+            if (taskIndex > taskList.size()) {
+                throw new BlueException("There isn't a task " + taskIndex + "!  (•̀⤙•́ )");
+            }
+            taskIndices[i] = taskIndex - 1;
+        }
+
+        Task[] tasks = taskList.get(taskIndices);
+        taskList.remove(taskIndices);
         storage.save(taskList);
-        return ui.deleteTaskMessage(task);
+        return ui.deleteTaskMessage(tasks);
     }
 }
