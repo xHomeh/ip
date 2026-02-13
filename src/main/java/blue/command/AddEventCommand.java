@@ -13,6 +13,11 @@ import blue.ui.Ui;
  * Represents a command that adds an Event task to the task list.
  */
 public class AddEventCommand extends Command {
+    private static final String EMPTY_DESCRIPTION_MESSAGE = "The description can't be empty! =/";
+    private static final String INVALID_EVENT_FORMAT_MESSAGE =
+            "Events must have start and end times!!! <(˶`ロ´˶)> ";
+    private static final String INVALID_DATE_FORMAT_MESSAGE =
+            "Uh oh! I don't understand that date format, try yyyy-mm-dd!";
     private final String inputArgs;
 
     /**
@@ -24,7 +29,7 @@ public class AddEventCommand extends Command {
      */
     public AddEventCommand(String inputArgs) throws BlueException {
         if (inputArgs.isEmpty()) {
-            throw new BlueException("The description can't be empty! =/");
+            throw new BlueException(EMPTY_DESCRIPTION_MESSAGE);
         }
         this.inputArgs = inputArgs;
     }
@@ -46,42 +51,42 @@ public class AddEventCommand extends Command {
      */
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
-        BlueException emptyException = new BlueException("The description can't be empty! =/");
-
-        String[] eventInfo = new String[3];
-        String[] fromSplitArr = inputArgs.split("/from", 2);
-        eventInfo[0] = fromSplitArr[0].trim();
-
-        if (eventInfo[0].isEmpty()) {
-            throw emptyException;
-        }
-
-        BlueException eventException = new BlueException("Events must have start and end times!!! <(˶`ロ´˶)> ");
-
-        if (fromSplitArr.length < 2) {
-            throw eventException;
-        }
-        String eventRemainder = fromSplitArr[1].trim();
-        if (eventRemainder.isEmpty()) {
-            throw eventException;
-        }
-        String[] toSplitArr = eventRemainder.split("/to", 2);
-        eventInfo[1] = toSplitArr[0].trim();
-        if (toSplitArr.length < 2) {
-            throw eventException;
-        }
-        eventInfo[2] = toSplitArr[1].trim();
-        if (eventInfo[2].isEmpty()) {
-            throw eventException;
-        }
-
+        String[] eventInfo = parseEventInfo();
         try {
             Task task = new Event(eventInfo[0], eventInfo[1], eventInfo[2]);
             taskList.add(task);
             storage.save(taskList);
             return ui.addTaskMessage(task, taskList.size());
         } catch (DateTimeParseException e) {
-            throw new BlueException("Uh oh! I don't understand that date format, try yyyy-mm-dd!");
+            throw new BlueException(INVALID_DATE_FORMAT_MESSAGE);
         }
+    }
+
+    private String[] parseEventInfo() throws BlueException {
+        String[] fromSplitArr = inputArgs.split("/from", 2);
+        String description = fromSplitArr[0].trim();
+        if (description.isEmpty()) {
+            throw new BlueException(EMPTY_DESCRIPTION_MESSAGE);
+        }
+        if (fromSplitArr.length < 2) {
+            throw new BlueException(INVALID_EVENT_FORMAT_MESSAGE);
+        }
+
+        String eventRemainder = fromSplitArr[1].trim();
+        if (eventRemainder.isEmpty()) {
+            throw new BlueException(INVALID_EVENT_FORMAT_MESSAGE);
+        }
+
+        String[] toSplitArr = eventRemainder.split("/to", 2);
+        String fromDate = toSplitArr[0].trim();
+        if (toSplitArr.length < 2) {
+            throw new BlueException(INVALID_EVENT_FORMAT_MESSAGE);
+        }
+        String toDate = toSplitArr[1].trim();
+        if (toDate.isEmpty()) {
+            throw new BlueException(INVALID_EVENT_FORMAT_MESSAGE);
+        }
+
+        return new String[] {description, fromDate, toDate};
     }
 }

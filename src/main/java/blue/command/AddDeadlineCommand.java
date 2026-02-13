@@ -13,6 +13,10 @@ import blue.ui.Ui;
  * Represents a command that adds a Deadline task to the task list.
  */
 public class AddDeadlineCommand extends Command {
+    private static final String EMPTY_DESCRIPTION_MESSAGE = "The description can't be empty! =/";
+    private static final String INVALID_DEADLINE_FORMAT_MESSAGE = "Deadlines must have a deadline... (ꐦ¬_¬)";
+    private static final String INVALID_DATE_FORMAT_MESSAGE =
+            "Uh oh! I don't understand that date format, try yyyy-mm-dd!";
     private final String inputArgs;
 
     /**
@@ -23,7 +27,7 @@ public class AddDeadlineCommand extends Command {
      */
     public AddDeadlineCommand(String inputArgs) throws BlueException {
         if (inputArgs.isEmpty()) {
-            throw new BlueException("The description can't be empty! =/");
+            throw new BlueException(EMPTY_DESCRIPTION_MESSAGE);
         }
         this.inputArgs = inputArgs;
     }
@@ -44,28 +48,7 @@ public class AddDeadlineCommand extends Command {
      */
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) throws BlueException {
-        BlueException emptyException = new BlueException("The description can't be empty! =/");
-
-        String[] deadlineInfo = new String[2];
-        String[] by = inputArgs.split("/by", 2);
-
-        deadlineInfo[0] = by[0].trim();
-
-        if (deadlineInfo[0].isEmpty()) {
-            throw emptyException;
-        }
-
-        BlueException deadlineException = new BlueException("Deadlines must have a deadline... (ꐦ¬_¬)");
-
-        if (by.length < 2) {
-            throw deadlineException;
-        }
-
-        deadlineInfo[1] = by[1].trim();
-        if (deadlineInfo[1].isEmpty()) {
-            throw deadlineException;
-        }
-
+        String[] deadlineInfo = parseDeadlineInfo();
         try {
             Task task = new Deadline(deadlineInfo[0], deadlineInfo[1]);
             taskList.add(task);
@@ -74,5 +57,23 @@ public class AddDeadlineCommand extends Command {
         } catch (DateTimeParseException e) {
             throw new BlueException("Uh oh! I don't understand that date format, try yyyy-mm-dd!");
         }
+    }
+
+    private String[] parseDeadlineInfo() throws BlueException {
+        String[] by = inputArgs.split("/by", 2);
+        String description = by[0].trim();
+        if (description.isEmpty()) {
+            throw new BlueException(EMPTY_DESCRIPTION_MESSAGE);
+        }
+        if (by.length < 2) {
+            throw new BlueException(INVALID_DEADLINE_FORMAT_MESSAGE);
+        }
+
+        String byDate = by[1].trim();
+        if (byDate.isEmpty()) {
+            throw new BlueException(INVALID_DEADLINE_FORMAT_MESSAGE);
+        }
+
+        return new String[] {description, byDate};
     }
 }
