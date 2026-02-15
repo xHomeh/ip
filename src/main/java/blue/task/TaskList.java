@@ -69,7 +69,7 @@ public class TaskList {
     }
 
     /**
-     * Mark tasks at the specified 0-based indices as done.
+     * Marks tasks at the specified 0-based indices as done.
      *
      * @param indices Array of 0-based index of task to mark as done.
      */
@@ -83,7 +83,7 @@ public class TaskList {
     }
 
     /**
-     * Mark all tasks as done.
+     * Marks all tasks as done.
      */
     public void markAll() {
         for (Task task : tasks) {
@@ -92,7 +92,7 @@ public class TaskList {
     }
 
     /**
-     * Unmark tasks at the specified 0-based indices as done.
+     * Unmarks tasks at the specified 0-based indices as done.
      *
      * @param indices Array of 0-based index of task to unmark as done.
      */
@@ -106,7 +106,7 @@ public class TaskList {
     }
 
     /**
-     * Unmark all tasks as done.
+     * Unmarks all tasks as done.
      */
     public void unmarkAll() {
         for (Task task : tasks) {
